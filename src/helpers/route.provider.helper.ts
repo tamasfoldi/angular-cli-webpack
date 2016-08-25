@@ -62,7 +62,7 @@ export class RootCmp {
 
 export const routerConfig: RouterConfig = [
   { path: '', component: BlankCmp },
-  { path: 'dasboard', component: DashboardComponent }
+  { path: 'dashboard', component: DashboardComponent }
 ];
 
 export function routeTestProviders() {

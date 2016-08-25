@@ -27,12 +27,13 @@ describe('Component: Dashboard', () => {
       inject([Router, TestComponentBuilder, HeroService],
         (router: Router, tcb: TestComponentBuilder,
           mockHeroService: HeroMockService) => {
-          const f = createRoot(tcb, router, RootCmp);     
-          router.initialNavigation();
-          tick();
-          f.detectChanges();          
+          const f = createRoot(tcb, router, RootCmp);
+          router.navigateByUrl('/dashboard');
+          advance(f);
+          f.detectChanges();
 
           let dashboard = f.debugElement.nativeElement;
+
           expect(dashboard.querySelectorAll('.hero').length).toBe(2);
         })));
   });

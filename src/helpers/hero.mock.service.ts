@@ -12,7 +12,7 @@ export class HeroMockService {
   constructor() { }
 
   getHeroes(): Promise<Hero[]> {
-    return Observable.of([{ id: 0, name: 'Test Hero 1' }, { id: 1, name: 'Test Hero 2' }]).toPromise();
+    return Observable.of([{ id: 0, name: 'Test Hero 1' }, { id: 1, name: 'Test Hero 2' }, { id: 2, name: 'Test Hero 3' }]).toPromise();
   }
 
   getHero(id: number): Promise<Hero> {
