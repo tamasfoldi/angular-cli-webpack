@@ -2,9 +2,12 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'my-app',
-  templateUrl: './app.component.html',
-  styleUrls: ['app.component.css']
+  template: require('./app.component.html'),
+  styles: [require('./app.component.css')]
 })
 export class AppComponent {
-  title = 'Tour of Heroes';
+  title: string;
+  constructor() {
+    this.title = 'Tour of Heroes';
+  }
 }

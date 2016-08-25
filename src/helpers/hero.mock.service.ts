@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HeroService } from '../app/hero.service';
 import { Headers, Http, Response, ResponseOptions } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
@@ -11,7 +12,7 @@ export class HeroMockService {
   constructor() { }
 
   getHeroes(): Promise<Hero[]> {
-    return Observable.of([{id: 0, name: 'Test Hero 1'}, {id: 1, name: 'Test Hero 2'}]).toPromise();
+    return Observable.of([{ id: 0, name: 'Test Hero 1' }, { id: 1, name: 'Test Hero 2' }]).toPromise();
   }
 
   getHero(id: number): Promise<Hero> {
@@ -27,7 +28,7 @@ export class HeroMockService {
   }
 
   delete(hero: Hero): Promise<Response> {
-    return Observable.of(new Response(new ResponseOptions())).toPromise();
+    return Observable.of(new Response(new ResponseOptions({ status: 200, statusText: "OK" }))).toPromise();
   }
 
   // Add new Hero
