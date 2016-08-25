@@ -3,7 +3,7 @@
 import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { DashboardComponent } from './dashboard.component';
-import { routeTestProviders, createRoot, advance, RootCmp } from '../../helpers/route.provider.helper';
+import { routeTestProviders, createRoot, advance, RootCmp, BlankCmp } from '../../helpers/route.provider.helper';
 import { HeroService } from '../hero.service';
 import { HeroMockService } from '../../helpers/hero.mock.service';
 import {
@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TestComponentBuilder, TestBed } from '@angular/core/testing';
 import { AppComponent } from '../app.component';
+import { HeroDetailComponent } from '../hero-detail/hero-detail.component';
 import { FormsModule } from '@angular/forms';
 
 describe('Component: Dashboard', () => {
@@ -24,6 +25,7 @@ describe('Component: Dashboard', () => {
         routeTestProviders(),
         { provide: HeroService, useClass: HeroMockService }
       ],
+      declarations: [DashboardComponent, HeroDetailComponent, BlankCmp],
       imports: [FormsModule]
     });
   });
