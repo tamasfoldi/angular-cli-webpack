@@ -13,28 +13,54 @@ import {
 } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { TestComponentBuilder } from '@angular/core/testing';
+import { TestComponentBuilder, TestBed } from '@angular/core/testing';
 import { AppComponent } from '../app.component';
+import { FormsModule } from '@angular/forms';
 
 describe('Component: Dashboard', () => {
   beforeEach(() => {
-    addProviders([routeTestProviders(),
-      { provide: HeroService, useClass: HeroMockService }]);
+    TestBed.configureTestingModule({
+      providers: [
+        routeTestProviders(),
+        { provide: HeroService, useClass: HeroMockService }
+      ],
+      imports: [FormsModule]
+    });
   });
 
-  describe('initialization', () => {
-    it('retrieves the track', fakeAsync(
-      inject([Router, TestComponentBuilder, HeroService],
-        (router: Router, tcb: TestComponentBuilder,
-          mockHeroService: HeroMockService) => {
-          const f = createRoot(tcb, router, RootCmp);
-          router.navigateByUrl('/dashboard');
-          advance(f);
-          f.detectChanges();
+  it('should display heroes', fakeAsync(
+    inject([Router, TestComponentBuilder, HeroService, Location],
+      (router: Router, tcb: TestComponentBuilder,
+        mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(tcb, router, RootCmp);
+        expect(location.path()).toEqual('/');
 
-          let dashboard = f.debugElement.nativeElement;
+        router.navigateByUrl('/dashboard');
+        advance(f);
+        expect(location.path()).toEqual('/dashboard');
 
-          expect(dashboard.querySelectorAll('.hero').length).toBe(2);
-        })));
-  });
+        let dashboard = f.debugElement.nativeElement;
+        expect(dashboard.querySelectorAll('.hero').length).toBe(2);
+      })
+  )
+  );
+
+  it('should navigate to hero detail', fakeAsync(
+    inject([Router, TestComponentBuilder, HeroService, Location],
+      (router: Router, tcb: TestComponentBuilder,
+        mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(tcb, router, RootCmp);
+        expect(location.path()).toEqual('/');
+
+        router.navigateByUrl('/dashboard');
+        advance(f);
+        expect(location.path()).toEqual('/dashboard');
+
+        let heroElement = f.debugElement.children[1].componentInstance;
+        heroElement.gotoDetail(heroElement.heroes[0]);
+        advance(f);
+        expect(location.path()).toEqual('/detail/1');
+      })
+  )
+  );
 });

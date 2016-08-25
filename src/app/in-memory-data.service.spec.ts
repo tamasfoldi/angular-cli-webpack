@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { addProviders, async, inject } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 import { InMemoryDataService } from './in-memory-data.service';
 
 describe('Service: InMemoryData', () => {
@@ -18,7 +18,9 @@ describe('Service: InMemoryData', () => {
       { id: 20, name: 'Tornado' }
     ];
   beforeEach(() => {
-    addProviders([InMemoryDataService]);
+    TestBed.configureTestingModule({
+      providers: [InMemoryDataService]
+    });
   });
 
   it('should createddb return with heroes',

@@ -1,11 +1,13 @@
 /* tslint:disable:no-unused-variable */
 
-import { addProviders, async, inject } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
 describe('App: Webpack', () => {
   beforeEach(() => {
-    addProviders([AppComponent]);
+    TestBed.configureTestingModule({
+      providers: [AppComponent]
+    });
   });
 
   it('should create the app',
@@ -15,7 +17,6 @@ describe('App: Webpack', () => {
 
   it('should have as title \'app works!\'',
     inject([AppComponent], (app: AppComponent) => {
-      console.log("asdf");
       expect(app.title).toEqual('Tour of Heroes');
     }));
 });

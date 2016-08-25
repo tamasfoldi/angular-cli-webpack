@@ -4,7 +4,7 @@ import {
   inject,
   fakeAsync,
   tick,
-  addProviders
+  TestBed
 } from '@angular/core/testing';
 import {MockBackend, MockConnection} from '@angular/http/testing';
 import {provide} from '@angular/core';
@@ -18,20 +18,22 @@ import {
 import { HeroSearchService } from './hero-search.service';
 
 describe('Service: Hero', () => {
-  const API_URL = "app/heroes/?name=";   
-  
+  const API_URL = "app/heroes/?name=";
+
   beforeEach(() => {
-    addProviders([
-      BaseRequestOptions,
-      MockBackend,
-      HeroSearchService,
-      provide(Http, {
-        useFactory: (backend: ConnectionBackend,
-          defaultOptions: BaseRequestOptions) => {
-          return new Http(backend, defaultOptions);
-        }, deps: [MockBackend, BaseRequestOptions]
-      }),
-    ]);
+    TestBed.configureTestingModule({
+      providers: [
+        BaseRequestOptions,
+        MockBackend,
+        HeroSearchService,
+        provide(Http, {
+          useFactory: (backend: ConnectionBackend,
+            defaultOptions: BaseRequestOptions) => {
+            return new Http(backend, defaultOptions);
+          }, deps: [MockBackend, BaseRequestOptions]
+        })
+      ]
+    })
   });
 
   it('should search using the term',

@@ -22,11 +22,9 @@ import {
   HashLocationStrategy
 } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
-import { HeroService } from '../app/hero.service';
-import { HeroMockService } from './hero.mock.service'
-import { AppComponent } from '../app/app.component';
+import { HeroMockService } from './hero.mock.service';
 import { DashboardComponent } from '../app/dashboard/dashboard.component';
-import { appRoutes } from '../app/app.routing';
+import { HeroDetailComponent } from '../app/hero-detail/hero-detail.component';
 
 export function createRoot(tcb: TestComponentBuilder,
   router: Router,
@@ -55,14 +53,15 @@ export class BlankCmp {
   selector: 'root-cmp',
   template: `<router-outlet></router-outlet>`,
   directives: [ROUTER_DIRECTIVES],
-  entryComponents: [BlankCmp, DashboardComponent]
+  entryComponents: [BlankCmp, DashboardComponent, HeroDetailComponent]
 })
 export class RootCmp {
 }
 
 export const routerConfig: RouterConfig = [
   { path: '', component: BlankCmp },
-  { path: 'dashboard', component: DashboardComponent }
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'detail/:id', component: HeroDetailComponent },
 ];
 
 export function routeTestProviders() {

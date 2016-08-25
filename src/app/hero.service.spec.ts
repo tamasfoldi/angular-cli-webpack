@@ -4,7 +4,7 @@ import {
   inject,
   fakeAsync,
   tick,
-  addProviders
+  TestBed
 } from '@angular/core/testing';
 import {MockBackend, MockConnection} from '@angular/http/testing';
 import {provide} from '@angular/core';
@@ -24,17 +24,19 @@ describe('Hero Service', () => {
   const heroesUrl = 'app/heroes';
 
   beforeEach(() => {
-    addProviders([
-      BaseRequestOptions,
-      MockBackend,
-      HeroService,
-      provide(Http, {
-        useFactory: (backend: ConnectionBackend,
-          defaultOptions: BaseRequestOptions) => {
-          return new Http(backend, defaultOptions);
-        }, deps: [MockBackend, BaseRequestOptions]
-      }),
-    ]);
+    TestBed.configureTestingModule({
+      providers: [
+        BaseRequestOptions,
+        MockBackend,
+        HeroService,
+        provide(Http, {
+          useFactory: (backend: ConnectionBackend,
+            defaultOptions: BaseRequestOptions) => {
+            return new Http(backend, defaultOptions);
+          }, deps: [MockBackend, BaseRequestOptions]
+        }),
+      ]
+    })
   });
 
   describe('getHeroes', () => {
@@ -139,7 +141,7 @@ describe('Hero Service', () => {
   });
 
   describe('delete', () => {
-    it('should delete a hero', 
+    it('should delete a hero',
       inject([HeroService, MockBackend],
         fakeAsync((service: HeroService, mockBackend: MockBackend) => {
           let resp;
@@ -156,7 +158,7 @@ describe('Hero Service', () => {
             resp = _rsp;
           });
           tick();
-          expect(resp).toEqual(new Response(new ResponseOptions({status: 200, statusText: "OK"})));
+          expect(resp).toEqual(new Response(new ResponseOptions({ status: 200, statusText: "OK" })));
         }))
     );
   });
