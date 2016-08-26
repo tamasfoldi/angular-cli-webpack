@@ -7,7 +7,7 @@ import { HeroService } from '../hero.service';
 @Component({
   selector: 'my-heroes',
   template: require('./heroes.component.html'),
-  styleUrls: [require('./heroes.component.css')]
+  styles: [require('./heroes.component.css')]
 })
 export class HeroesComponent implements OnInit {
   heroes: Hero[];
