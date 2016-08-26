@@ -25,6 +25,7 @@ import { SpyLocation } from '@angular/common/testing';
 import { HeroMockService } from './hero.mock.service';
 import { DashboardComponent } from '../app/dashboard/dashboard.component';
 import { HeroDetailComponent } from '../app/hero-detail/hero-detail.component';
+import { HeroesComponent } from '../app/heroes/heroes.component';
 
 export function createRoot(tcb: TestComponentBuilder,
   router: Router,
@@ -53,7 +54,7 @@ export class BlankCmp {
   selector: 'root-cmp',
   template: `<router-outlet></router-outlet>`,
   directives: [ROUTER_DIRECTIVES],
-  entryComponents: [BlankCmp, DashboardComponent, HeroDetailComponent]
+  entryComponents: [BlankCmp, DashboardComponent, HeroDetailComponent, HeroesComponent]
 })
 export class RootCmp {
 }
@@ -62,6 +63,7 @@ export const routerConfig: RouterConfig = [
   { path: '', component: BlankCmp },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'detail/:id', component: HeroDetailComponent },
+  { path: 'heroes', component: HeroesComponent },
 ];
 
 export function routeTestProviders() {

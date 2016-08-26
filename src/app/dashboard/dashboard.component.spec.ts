@@ -58,10 +58,29 @@ describe('Component: Dashboard', () => {
         advance(f);
         expect(location.path()).toEqual('/dashboard');
 
-        let heroElement = f.debugElement.children[1].componentInstance;
+        let heroElement = <DashboardComponent>f.debugElement.children[1].componentInstance;
         heroElement.gotoDetail(heroElement.heroes[0]);
         advance(f);
         expect(location.path()).toEqual('/detail/1');
+      })
+  )
+  );
+
+  it('should call the gotoDetail when a hero was clicked', fakeAsync(
+    inject([Router, TestComponentBuilder, HeroService, Location],
+      (router: Router, tcb: TestComponentBuilder,
+        mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(tcb, router, RootCmp);
+        expect(location.path()).toEqual('/');
+
+        router.navigateByUrl('/dashboard');
+        advance(f);
+        expect(location.path()).toEqual('/dashboard');
+
+        let heroElement = <DashboardComponent>f.debugElement.children[1].componentInstance;
+        spyOn(heroElement, "gotoDetail");
+        f.debugElement.nativeElement.querySelector('.hero').click();
+        expect(heroElement.gotoDetail).toHaveBeenCalled();
       })
   )
   );

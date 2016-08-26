@@ -9,6 +9,11 @@ import { Hero } from '../app/hero';
 
 @Injectable()
 export class HeroMockService {
+  heroes = [
+    { id: 0, name: 'Test Hero 1' }, 
+    { id: 1, name: 'Test Hero 2' }, 
+    { id: 2, name: 'Test Hero 3' }
+  ];
   constructor() { }
 
   getHeroes(): Promise<Hero[]> {
