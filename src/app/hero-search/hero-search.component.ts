@@ -9,8 +9,7 @@ import { Hero } from '../hero';
 @Component({
   selector: 'hero-search',
   template: require('./hero-search.component.html'),
-  styles: [require('./hero-search.component.css')],
-  providers: [HeroSearchService]
+  styles: [require('./hero-search.component.css')]
 })
 export class HeroSearchComponent implements OnInit {
   heroes: Observable<Hero[]>;

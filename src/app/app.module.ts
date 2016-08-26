@@ -13,6 +13,7 @@ import './rxjs-extensions';
 import { AppComponent } from './app.component';
 import { routing, routedComponents } from './app.routing';
 import { HeroService } from './hero.service';
+import { HeroSearchService } from './hero-search.service';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
   ],
   providers: [
     HeroService,
+    HeroSearchService,
     { provide: XHRBackend, useClass: InMemoryBackendService }, // in-mem server
     { provide: SEED_DATA, useClass: InMemoryDataService }     // in-mem server data
   ],

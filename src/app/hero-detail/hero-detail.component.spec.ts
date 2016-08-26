@@ -18,7 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { HeroDetailComponent } from './hero-detail.component';
 import { getDOM } from '@angular/platform-browser/src/dom/dom_adapter';
 
-describe('Component: Heroes', () => {
+describe('Component: Hero Detail', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
