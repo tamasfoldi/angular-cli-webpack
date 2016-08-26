@@ -56,7 +56,7 @@ describe('Component: Heroes', () => {
       (router: Router, tcb: TestComponentBuilder,
         mockHeroService: HeroService, location: Location) => {
         const f = createRoot(tcb, router, RootCmp);
-        spyOn(mockHeroService, "getHeroes").and.callFake(() => Promise.reject("getHeroes fail"));        
+        spyOn(mockHeroService, "getHeroes").and.callFake(() => Promise.reject("getHeroes fail"));
         expect(location.path()).toEqual('/');
 
         router.navigateByUrl('/heroes');
@@ -101,12 +101,110 @@ describe('Component: Heroes', () => {
 
         let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
         let heroNative = f.debugElement.nativeElement;
-        expect(heroNative.querySelector('my-hero-detail')).toBeFalsy();   
-        expect(heroesCompRef.selectedHero).toBeUndefined();     
+        expect(heroNative.querySelector('my-hero-detail')).toBeFalsy();
+        expect(heroesCompRef.selectedHero).toBeUndefined();
         heroesCompRef.addHero();
         advance(f);
         expect(heroNative.querySelector('my-hero-detail')).toBeTruthy();
-        expect(heroesCompRef.selectedHero).toBeNull();             
+        expect(heroesCompRef.selectedHero).toBeNull();
+      })
+  )
+  );
+
+  it('should hide "my-hero-detail" component', fakeAsync(
+    inject([Router, TestComponentBuilder, HeroService, Location],
+      (router: Router, tcb: TestComponentBuilder,
+        mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(tcb, router, RootCmp);
+        expect(location.path()).toEqual('/');
+        router.navigateByUrl('/heroes');
+        advance(f);
+        expect(location.path()).toEqual('/heroes');
+
+        let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
+        let heroNative = f.debugElement.nativeElement;
+        spyOn(heroesCompRef, "getHeroes");
+        heroesCompRef.addingHero = true;
+        advance(f);
+        expect(heroNative.querySelector('my-hero-detail')).toBeTruthy();
+        heroesCompRef.close(heroesCompRef.heroes[0]);
+        advance(f);
+
+        expect(heroNative.querySelector('my-hero-detail')).toBeFalsy();
+        expect(heroesCompRef.addingHero).toBeFalsy();
+        expect(heroesCompRef.getHeroes).toHaveBeenCalled();
+      })
+  )
+  );
+
+  it('should set the selected hero', fakeAsync(
+    inject([Router, TestComponentBuilder, HeroService, Location],
+      (router: Router, tcb: TestComponentBuilder,
+        mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(tcb, router, RootCmp);
+        expect(location.path()).toEqual('/');
+        router.navigateByUrl('/heroes');
+        advance(f);
+        expect(location.path()).toEqual('/heroes');
+
+        let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
+        let heroNative = f.debugElement.nativeElement;
+        heroesCompRef.addingHero = true;
+        advance(f);
+        expect(heroNative.querySelector('my-hero-detail')).toBeTruthy();
+        heroesCompRef.onSelect({ id: 0: name: "Test Hero" });
+        advance(f);
+
+        expect(heroNative.querySelector('my-hero-detail')).toBeFalsy();
+        expect(heroesCompRef.addingHero).toBeFalsy();
+        expect(heroesCompRef.selectedHero).toEqual({ id: 0: name: "Test Hero" });
+      })
+  )
+  );
+
+  it('should call onSelect with the clicked hero', fakeAsync(
+    inject([Router, TestComponentBuilder, HeroService, Location],
+      (router: Router, tcb: TestComponentBuilder,
+        mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(tcb, router, RootCmp);
+        expect(location.path()).toEqual('/');
+        router.navigateByUrl('/heroes');
+        advance(f);
+        expect(location.path()).toEqual('/heroes');
+
+        let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
+        let heroNative = f.debugElement.nativeElement;
+        spyOn(heroesCompRef, "onSelect");
+        heroesCompRef.addingHero = true;
+        advance(f);
+        expect(heroNative.querySelector('my-hero-detail')).toBeTruthy();
+        heroNative.querySelector('li').click();
+        advance(f);
+
+        expect(heroesCompRef.onSelect).toHaveBeenCalled();
+        expect(heroesCompRef.onSelect).toHaveBeenCalledWith(heroesCompRef.heroes[0]);        
+      })
+  )
+  );
+
+  it('should call deleteHero with the clicked "delete-button" button', fakeAsync(
+    inject([Router, TestComponentBuilder, HeroService, Location],
+      (router: Router, tcb: TestComponentBuilder,
+        mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(tcb, router, RootCmp);
+        expect(location.path()).toEqual('/');
+        router.navigateByUrl('/heroes');
+        advance(f);
+        expect(location.path()).toEqual('/heroes');
+
+        let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
+        let heroNative = f.debugElement.nativeElement;
+        spyOn(heroesCompRef, "deleteHero");
+        heroNative.querySelector('.delete-button').click();
+        advance(f);
+
+        expect(heroesCompRef.deleteHero).toHaveBeenCalled();
+        expect(heroesCompRef.deleteHero).toHaveBeenCalledWith(heroesCompRef.heroes[0], document.createEvent('MouseEvents'));        
       })
   )
   );
