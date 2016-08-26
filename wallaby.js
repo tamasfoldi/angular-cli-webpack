@@ -44,6 +44,8 @@ module.exports = function (wallaby) {
       '**/*.ts': wallaby.compilers.typeScript(compilerOptions)
     },
 
+    lowCoverageThreshold: 70, // 70%
+    slowTestThreshold: 200, //200ms
     postprocessor: webpackPostprocessor,
 
     setup: function () {
