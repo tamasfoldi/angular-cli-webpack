@@ -152,12 +152,12 @@ describe('Component: Heroes', () => {
         heroesCompRef.addingHero = true;
         advance(f);
         expect(heroNative.querySelector('my-hero-detail')).toBeTruthy();
-        heroesCompRef.onSelect({ id: 0: name: "Test Hero" });
+        heroesCompRef.onSelect({ id: 0, name: "Test Hero" });
         advance(f);
 
         expect(heroNative.querySelector('my-hero-detail')).toBeFalsy();
         expect(heroesCompRef.addingHero).toBeFalsy();
-        expect(heroesCompRef.selectedHero).toEqual({ id: 0: name: "Test Hero" });
+        expect(heroesCompRef.selectedHero).toEqual({ id: 0, name: "Test Hero" });
       })
   )
   );
@@ -182,7 +182,7 @@ describe('Component: Heroes', () => {
         advance(f);
 
         expect(heroesCompRef.onSelect).toHaveBeenCalled();
-        expect(heroesCompRef.onSelect).toHaveBeenCalledWith(heroesCompRef.heroes[0]);        
+        expect(heroesCompRef.onSelect).toHaveBeenCalledWith(heroesCompRef.heroes[0]);
       })
   )
   );
@@ -204,7 +204,71 @@ describe('Component: Heroes', () => {
         advance(f);
 
         expect(heroesCompRef.deleteHero).toHaveBeenCalled();
-        expect(heroesCompRef.deleteHero).toHaveBeenCalledWith(heroesCompRef.heroes[0], document.createEvent('MouseEvents'));        
+        expect(heroesCompRef.deleteHero).toHaveBeenCalledWith(heroesCompRef.heroes[0], jasmine.any(Event));
+      })
+  )
+  );
+
+  it('should delete hero', fakeAsync(
+    inject([Router, TestComponentBuilder, HeroService, Location],
+      (router: Router, tcb: TestComponentBuilder,
+        mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(tcb, router, RootCmp);
+        expect(location.path()).toEqual('/');
+        router.navigateByUrl('/heroes');
+        advance(f);
+        expect(location.path()).toEqual('/heroes');
+
+        let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
+        let heroesBeforeDelete = heroesCompRef.heroes;
+        let heroToDelete = heroesCompRef.heroes[0];
+        heroesCompRef.selectedHero = heroesCompRef.heroes[0];
+        heroesCompRef.deleteHero(heroToDelete, document.createEvent("Event"));
+        advance(f);
+
+        expect(heroesCompRef.selectedHero).toBeNull();
+        expect(heroesCompRef.heroes.length).toEqual(heroesBeforeDelete.length - 1);
+        expect(heroesCompRef.heroes.indexOf(heroToDelete)).toEqual(-1);
+      })
+  )
+  );
+
+  it('should display error on getHeroes fail', fakeAsync(
+    inject([Router, TestComponentBuilder, HeroService, Location],
+      (router: Router, tcb: TestComponentBuilder,
+        mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(tcb, router, RootCmp);
+        spyOn(mockHeroService, "delete").and.callFake(() => Promise.reject("deleteHero fail"));
+        expect(location.path()).toEqual('/');
+
+        router.navigateByUrl('/heroes');
+        advance(f);
+        expect(location.path()).toEqual('/heroes');
+        let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
+        let heroes = f.debugElement.nativeElement;
+        heroesCompRef.deleteHero({ id: 0, name: "Test Hero" }, document.createEvent('Event'));
+        advance(f);
+        expect(heroes.querySelector('.error').innerHTML).toBe("deleteHero fail");
+      })
+  )
+  );
+
+  it('should navigate to hero detail', fakeAsync(
+    inject([Router, TestComponentBuilder, HeroService, Location],
+      (router: Router, tcb: TestComponentBuilder,
+        mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(tcb, router, RootCmp);
+        expect(location.path()).toEqual('/');
+
+        router.navigateByUrl('/heroes');
+        advance(f);
+        expect(location.path()).toEqual('/heroes');
+
+        let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
+        heroesCompRef.selectedHero = {id: 0, name: "Test Hero"};
+        heroesCompRef.gotoDetail();
+        advance(f);
+        expect(location.path()).toEqual('/detail/0');
       })
   )
   );
