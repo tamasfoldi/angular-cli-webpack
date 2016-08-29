@@ -15,7 +15,10 @@ import { Location } from '@angular/common';
 import { TestComponentBuilder, TestBed } from '@angular/core/testing';
 import { AppComponent } from '../app.component';
 import { FormsModule } from '@angular/forms';
-import { HeroesComponent } from './heroes.component';
+import { HeroSearchComponent } from '../hero-search/hero-search.component';
+import { HeroDetailComponent } from '../hero-detail/hero-detail.component';
+import { HeroesComponent } from '../heroes/heroes.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 describe('Component: Heroes', () => {
   beforeEach(() => {
@@ -24,7 +27,8 @@ describe('Component: Heroes', () => {
         routeTestProviders(),
         { provide: HeroService, useClass: HeroMockService }
       ],
-      declarations: [HeroesComponent, BlankCmp],
+      declarations: [HeroSearchComponent, RootCmp, HeroesComponent, DashboardComponent, HeroDetailComponent, BlankCmp],
+
       imports: [FormsModule]
     });
   });
@@ -265,7 +269,7 @@ describe('Component: Heroes', () => {
         expect(location.path()).toEqual('/heroes');
 
         let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
-        heroesCompRef.selectedHero = {id: 0, name: "Test Hero"};
+        heroesCompRef.selectedHero = { id: 0, name: "Test Hero" };
         heroesCompRef.gotoDetail();
         advance(f);
         expect(location.path()).toEqual('/detail/0');

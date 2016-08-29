@@ -17,15 +17,19 @@ import { AppComponent } from '../app.component';
 import { FormsModule } from '@angular/forms';
 import { HeroDetailComponent } from './hero-detail.component';
 import { getDOM } from '@angular/platform-browser/src/dom/dom_adapter';
+import { HeroSearchComponent } from '../hero-search/hero-search.component';
+import { HeroesComponent } from '../heroes/heroes.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
-describe('Component: Hero Detail', () => {
+describe('Component: Detail', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         routeTestProviders(),
         { provide: HeroService, useClass: HeroMockService }
       ],
-      declarations: [HeroDetailComponent, BlankCmp],
+      declarations: [HeroSearchComponent, RootCmp, HeroesComponent, DashboardComponent, HeroDetailComponent, BlankCmp],
+
       imports: [FormsModule]
     });
   });

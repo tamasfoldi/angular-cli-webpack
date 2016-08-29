@@ -4,8 +4,10 @@ import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { DashboardComponent } from './dashboard.component';
 import { routeTestProviders, createRoot, advance, RootCmp, BlankCmp } from '../../helpers/route.provider.helper';
+import { HeroSearchService } from '../hero-search.service';
 import { HeroService } from '../hero.service';
 import { HeroMockService } from '../../helpers/hero.mock.service';
+import { HeroMockSearchService } from '../../helpers/hero.search.mock.service';
 import {
   inject,
   fakeAsync,
@@ -16,6 +18,8 @@ import { Location } from '@angular/common';
 import { TestComponentBuilder, TestBed } from '@angular/core/testing';
 import { AppComponent } from '../app.component';
 import { HeroDetailComponent } from '../hero-detail/hero-detail.component';
+import { HeroSearchComponent } from '../hero-search/hero-search.component';
+import { HeroesComponent } from '../heroes/heroes.component';
 import { FormsModule } from '@angular/forms';
 
 describe('Component: Dashboard', () => {
@@ -23,9 +27,11 @@ describe('Component: Dashboard', () => {
     TestBed.configureTestingModule({
       providers: [
         routeTestProviders(),
-        { provide: HeroService, useClass: HeroMockService }
+        { provide: HeroService, useClass: HeroMockService },
+                { provide: HeroSearchService, useClass: HeroMockSearchService }
+
       ],
-      declarations: [DashboardComponent, HeroDetailComponent, BlankCmp],
+      declarations: [HeroSearchComponent, RootCmp, HeroesComponent, DashboardComponent, HeroDetailComponent, BlankCmp],
       imports: [FormsModule]
     });
   });

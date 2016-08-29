@@ -68,13 +68,13 @@ describe('Hero Service', () => {
           mockBackend.connections.subscribe((c: MockConnection) => {
             expect(c.request.url).toBe(heroesUrl);
             expect(c.request.method).toBe(RequestMethod.Get);
-            c.mockError("ERROR TEST");
+            c.mockError(new Error("ERROR TEST"));
           })
           service.getHeroes().then(() => { }, _rej => {
             errorResp = _rej;
           });
           tick();
-          expect(errorResp).toEqual("ERROR TEST");
+          expect(errorResp).toEqual('ERROR TEST');
         }))
     );
   });

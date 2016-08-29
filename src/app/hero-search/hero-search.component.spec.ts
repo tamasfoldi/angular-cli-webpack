@@ -10,7 +10,8 @@ import { HeroMockService } from '../../helpers/hero.mock.service';
 import {
   inject,
   fakeAsync,
-  addProviders
+  addProviders,
+  tick
 } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -18,6 +19,9 @@ import { TestComponentBuilder, TestBed } from '@angular/core/testing';
 import { AppComponent } from '../app.component';
 import { FormsModule } from '@angular/forms';
 import { HeroSearchComponent } from './hero-search.component';
+import { HeroDetailComponent } from '../hero-detail/hero-detail.component';
+import { HeroesComponent } from '../heroes/heroes.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 import { getDOM } from '@angular/platform-browser/src/dom/dom_adapter';
 
 describe('Component: Hero Search', () => {
@@ -28,7 +32,7 @@ describe('Component: Hero Search', () => {
         { provide: HeroService, useClass: HeroMockService },
         { provide: HeroSearchService, useClass: HeroMockSearchService }
       ],
-      declarations: [HeroSearchComponent, BlankCmp],
+      declarations: [HeroSearchComponent, RootCmp,  HeroesComponent, DashboardComponent, HeroDetailComponent, BlankCmp],
       imports: [FormsModule]
     });
   });
