@@ -2,7 +2,7 @@
 
 import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { routeTestProviders, createRoot, advance, RootCmp, BlankCmp } from '../../helpers/route.provider.helper';
+import { configureTests, createRoot, advance, RootCmp, BlankCmp } from '../../helpers/route.provider.helper';
 import { HeroService } from '../hero.service';
 import { HeroMockService } from '../../helpers/hero.mock.service';
 import {
@@ -22,28 +22,13 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 
 describe('Component: Heroes', () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        routeTestProviders(),
-        { provide: HeroService, useClass: HeroMockService }
-      ],
-      declarations: [HeroSearchComponent, RootCmp, HeroesComponent, DashboardComponent, HeroDetailComponent, BlankCmp],
-
-      imports: [FormsModule]
-    });
+    configureTests();
   });
 
-  /*it('should create an instance', () => {
-    let component = new HeroesComponent();
-    expect(component).toBeTruthy();
-  });*/
-
   it('should display heroes', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
 
         router.navigateByUrl('/heroes');
         advance(f);
@@ -56,12 +41,10 @@ describe('Component: Heroes', () => {
   );
 
   it('should display error on getHeroes fail', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
         spyOn(mockHeroService, "getHeroes").and.callFake(() => Promise.reject("getHeroes fail"));
-        expect(location.path()).toEqual('/');
 
         router.navigateByUrl('/heroes');
         advance(f);
@@ -74,11 +57,9 @@ describe('Component: Heroes', () => {
   );
 
   it('should call the addHero when "Add New Hero" was clicked', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
 
         router.navigateByUrl('/heroes');
         advance(f);
@@ -93,11 +74,9 @@ describe('Component: Heroes', () => {
   );
 
   it('should display "my-hero-detail" component', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
 
         router.navigateByUrl('/heroes');
         advance(f);
@@ -115,12 +94,48 @@ describe('Component: Heroes', () => {
   )
   );
 
-  it('should hide "my-hero-detail" component', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+  it('should call getHeroes if hero passed', fakeAsync(
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
+        router.navigateByUrl('/heroes');
+        advance(f);
+        expect(location.path()).toEqual('/heroes');
+
+        let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
+        spyOn(heroesCompRef, "getHeroes");
+        advance(f);
+
+        heroesCompRef.close(heroesCompRef.heroes[0]);
+        advance(f);
+
+        expect(heroesCompRef.getHeroes).toHaveBeenCalled();
+      })
+  )
+  );
+
+  it('should not call getHeroes if no hero passed', fakeAsync(
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
+        router.navigateByUrl('/heroes');
+        advance(f);
+        expect(location.path()).toEqual('/heroes');
+
+        let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
+        spyOn(heroesCompRef, "getHeroes");
+        heroesCompRef.close(undefined);
+        advance(f);
+
+        expect(heroesCompRef.getHeroes).not.toHaveBeenCalled();
+      })
+  )
+  );
+
+  it('should hide detail on close', fakeAsync(
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
         router.navigateByUrl('/heroes');
         advance(f);
         expect(location.path()).toEqual('/heroes');
@@ -142,11 +157,9 @@ describe('Component: Heroes', () => {
   );
 
   it('should set the selected hero', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
         router.navigateByUrl('/heroes');
         advance(f);
         expect(location.path()).toEqual('/heroes');
@@ -167,11 +180,9 @@ describe('Component: Heroes', () => {
   );
 
   it('should call onSelect with the clicked hero', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
         router.navigateByUrl('/heroes');
         advance(f);
         expect(location.path()).toEqual('/heroes');
@@ -192,11 +203,9 @@ describe('Component: Heroes', () => {
   );
 
   it('should call deleteHero with the clicked "delete-button" button', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
         router.navigateByUrl('/heroes');
         advance(f);
         expect(location.path()).toEqual('/heroes');
@@ -213,12 +222,10 @@ describe('Component: Heroes', () => {
   )
   );
 
-  it('should delete hero', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+  it('should unselect deleted hero', fakeAsync(
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
         router.navigateByUrl('/heroes');
         advance(f);
         expect(location.path()).toEqual('/heroes');
@@ -237,13 +244,32 @@ describe('Component: Heroes', () => {
   )
   );
 
+    it('should delete hero', fakeAsync(
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
+        router.navigateByUrl('/heroes');
+        advance(f);
+        expect(location.path()).toEqual('/heroes');
+
+        let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
+        let heroesBeforeDelete = heroesCompRef.heroes;
+        let heroToDelete = heroesCompRef.heroes[0];
+        heroesCompRef.selectedHero = null;
+        heroesCompRef.deleteHero(heroToDelete, document.createEvent("Event"));
+        advance(f);
+
+        expect(heroesCompRef.heroes.length).toEqual(heroesBeforeDelete.length - 1);
+        expect(heroesCompRef.heroes.indexOf(heroToDelete)).toEqual(-1);
+      })
+  )
+  );
+
   it('should display error on getHeroes fail', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
         spyOn(mockHeroService, "delete").and.callFake(() => Promise.reject("deleteHero fail"));
-        expect(location.path()).toEqual('/');
 
         router.navigateByUrl('/heroes');
         advance(f);
@@ -258,11 +284,9 @@ describe('Component: Heroes', () => {
   );
 
   it('should navigate to hero detail', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
 
         router.navigateByUrl('/heroes');
         advance(f);

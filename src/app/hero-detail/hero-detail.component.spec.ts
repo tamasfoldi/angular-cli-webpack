@@ -2,7 +2,7 @@
 
 import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { routeTestProviders, createRoot, advance, RootCmp, BlankCmp } from '../../helpers/route.provider.helper';
+import { configureTests, createRoot, advance, RootCmp, BlankCmp } from '../../helpers/route.provider.helper';
 import { HeroService } from '../hero.service';
 import { HeroMockService } from '../../helpers/hero.mock.service';
 import {
@@ -23,23 +23,13 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 
 describe('Component: Detail', () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        routeTestProviders(),
-        { provide: HeroService, useClass: HeroMockService }
-      ],
-      declarations: [HeroSearchComponent, RootCmp, HeroesComponent, DashboardComponent, HeroDetailComponent, BlankCmp],
-
-      imports: [FormsModule]
-    });
+    configureTests();
   });
 
   it('should show the details of the hero', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
 
         router.navigateByUrl('/detail/0');
         advance(f);
@@ -54,11 +44,9 @@ describe('Component: Detail', () => {
   ));
 
   it('should bind the input value to the name of the hero', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
 
         router.navigateByUrl('/detail/0');
         advance(f);
@@ -75,11 +63,9 @@ describe('Component: Detail', () => {
   ));
 
   it('should call the back on click the button', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
 
         router.navigateByUrl('/detail/0');
         advance(f);
@@ -95,11 +81,9 @@ describe('Component: Detail', () => {
   ));
 
   it('should call the save on click the button', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
 
         router.navigateByUrl('/detail/0');
         advance(f);
@@ -115,11 +99,9 @@ describe('Component: Detail', () => {
   ));
 
   it('should save the hero detail', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
 
         router.navigateByUrl('/detail/0');
         advance(f);
@@ -136,11 +118,9 @@ describe('Component: Detail', () => {
   ));
 
   it('should set the error', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
 
         router.navigateByUrl('/detail/0');
         spyOn(mockHeroService, 'save').and.callFake(() => Promise.reject('save fail'));
@@ -154,16 +134,34 @@ describe('Component: Detail', () => {
         advance(f);
 
         expect(herodetailRef.goBack).not.toHaveBeenCalled();
-        expect(herodetailRef.error).toBe('save fail')
+        expect(herodetailRef.error).toBe('save fail');
+      })
+  ));
+
+  it('should emit null if no hero added to back', fakeAsync(
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
+
+        router.navigateByUrl('/detail/0');
+
+        advance(f);
+        expect(location.path()).toEqual('/detail/0');
+        let herodetailRef = <HeroDetailComponent>f.debugElement.children[1].componentInstance;
+        let emittedHero;
+        herodetailRef.navigated = false;
+        herodetailRef.close.subscribe(hero => emittedHero = hero);
+        herodetailRef.goBack();
+        advance(f);
+
+        expect(emittedHero).toBeNull();
       })
   ));
 
   it('should navigate back on back', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
 
         router.navigateByUrl('/detail/0');
 
@@ -175,6 +173,26 @@ describe('Component: Detail', () => {
         advance(f);
 
         expect(window.history.back).toHaveBeenCalled();
+      })
+  ));
+
+  it('should emit the hero from the back param', fakeAsync(
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
+
+        router.navigateByUrl('/detail/0');
+
+        advance(f);
+        expect(location.path()).toEqual('/detail/0');
+        let herodetailRef = <HeroDetailComponent>f.debugElement.children[1].componentInstance;
+        let emittedHero;
+        herodetailRef.navigated = false;
+        herodetailRef.close.subscribe(hero => emittedHero = hero);
+        herodetailRef.goBack({id: 0, name: "Test Hero 1"});
+        advance(f);
+
+        expect(emittedHero).toEqual({id: 0, name: "Test Hero 1"});
       })
   ));
 

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { provide } from '@angular/core';
+import { HeroSearchService } from '../app/hero-search.service';
 
 import { Hero } from '../app/hero';
 const HEROES: Hero[] = [{ id: 0, name: 'T1' }, { id: 1, name: 'T12' }, { id: 2, name: 'T123' }];
@@ -13,5 +15,9 @@ export class HeroMockSearchService {
       throw (new Error());
     }
     return Observable.of(HEROES.filter(h => h.name.indexOf(term) >= 0));
+  }
+
+  getProviders(): Array<any> {
+    return [provide(HeroSearchService, {useValue: this})];
   }
 }

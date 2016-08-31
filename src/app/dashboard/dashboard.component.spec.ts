@@ -3,7 +3,7 @@
 import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { DashboardComponent } from './dashboard.component';
-import { routeTestProviders, createRoot, advance, RootCmp, BlankCmp } from '../../helpers/route.provider.helper';
+import { createRoot, advance, RootCmp, BlankCmp, configureTests } from '../../helpers/route.provider.helper';
 import { HeroSearchService } from '../hero-search.service';
 import { HeroService } from '../hero.service';
 import { HeroMockService } from '../../helpers/hero.mock.service';
@@ -24,24 +24,13 @@ import { FormsModule } from '@angular/forms';
 
 describe('Component: Dashboard', () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        routeTestProviders(),
-        { provide: HeroService, useClass: HeroMockService },
-                { provide: HeroSearchService, useClass: HeroMockSearchService }
-
-      ],
-      declarations: [HeroSearchComponent, RootCmp, HeroesComponent, DashboardComponent, HeroDetailComponent, BlankCmp],
-      imports: [FormsModule]
-    });
+    configureTests();
   });
 
   it('should display heroes', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
 
         router.navigateByUrl('/dashboard');
         advance(f);
@@ -54,11 +43,9 @@ describe('Component: Dashboard', () => {
   );
 
   it('should navigate to hero detail', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
 
         router.navigateByUrl('/dashboard');
         advance(f);
@@ -73,11 +60,9 @@ describe('Component: Dashboard', () => {
   );
 
   it('should call the gotoDetail when a hero was clicked', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroService, Location],
+      (router: Router, mockHeroService: HeroService, location: Location) => {
+        const f = createRoot(router, RootCmp);
 
         router.navigateByUrl('/dashboard');
         advance(f);

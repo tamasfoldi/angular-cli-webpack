@@ -68,7 +68,7 @@ describe('Hero Service', () => {
           mockBackend.connections.subscribe((c: MockConnection) => {
             expect(c.request.url).toBe(heroesUrl);
             expect(c.request.method).toBe(RequestMethod.Get);
-            c.mockError(new Error("ERROR TEST"));
+            c.mockError(new Error('ERROR TEST'));
           })
           service.getHeroes().then(() => { }, _rej => {
             errorResp = _rej;
@@ -77,6 +77,24 @@ describe('Hero Service', () => {
           expect(errorResp).toEqual('ERROR TEST');
         }))
     );
+
+    it('should return with an error 2', // for 100% branch coverage 
+      inject([HeroService, MockBackend],
+        fakeAsync((service: HeroService, mockBackend: MockBackend) => {
+          let errorResp;
+          mockBackend.connections.subscribe((c: MockConnection) => {
+            expect(c.request.url).toBe(heroesUrl);
+            expect(c.request.method).toBe(RequestMethod.Get);
+            c.mockError('ERROR TEST');
+          })
+          service.getHeroes().then(() => { }, _rej => {
+            errorResp = _rej;
+          });
+          tick();
+          expect(errorResp).toEqual('ERROR TEST');
+        }))
+    );
+
   });
 
   describe('getHero', () => {

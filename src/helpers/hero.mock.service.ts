@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HeroService } from '../app/hero.service';
-import { Headers, Http, Response, ResponseOptions } from '@angular/http';
+import { Response, ResponseOptions } from '@angular/http';
+import { provide } from '@angular/core';
 
 import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Rx';
@@ -10,8 +11,8 @@ import { Hero } from '../app/hero';
 @Injectable()
 export class HeroMockService {
   heroes = [
-    { id: 0, name: 'Test Hero 1' }, 
-    { id: 1, name: 'Test Hero 2' }, 
+    { id: 0, name: 'Test Hero 1' },
+    { id: 1, name: 'Test Hero 2' },
     { id: 2, name: 'Test Hero 3' }
   ];
   constructor() { }
@@ -49,5 +50,9 @@ export class HeroMockService {
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
+  }
+
+  getProviders(): Array<any> {
+    return [provide(HeroService, { useValue: this })];
   }
 }

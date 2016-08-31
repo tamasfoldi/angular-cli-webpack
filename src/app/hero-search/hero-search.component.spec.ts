@@ -2,7 +2,7 @@
 
 import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { routeTestProviders, createRoot, advance, RootCmp, BlankCmp } from '../../helpers/route.provider.helper';
+import { configureTests, createRoot, advance, RootCmp, BlankCmp } from '../../helpers/route.provider.helper';
 import { HeroSearchService } from '../hero-search.service';
 import { HeroService } from '../hero.service';
 import { HeroMockSearchService } from '../../helpers/hero.search.mock.service';
@@ -26,23 +26,13 @@ import { getDOM } from '@angular/platform-browser/src/dom/dom_adapter';
 
 describe('Component: Hero Search', () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        routeTestProviders(),
-        { provide: HeroService, useClass: HeroMockService },
-        { provide: HeroSearchService, useClass: HeroMockSearchService }
-      ],
-      declarations: [HeroSearchComponent, RootCmp,  HeroesComponent, DashboardComponent, HeroDetailComponent, BlankCmp],
-      imports: [FormsModule]
-    });
+    configureTests();
   });
 
   it('should display heroes', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroSearchService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        service: HeroSearchService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroSearchService, Location],
+      (router: Router, service: HeroSearchService, location: Location) => {
+        const f = createRoot(router, RootCmp);
         router.navigateByUrl('/search');
         advance(f);
         expect(location.path()).toEqual('/search');
@@ -63,11 +53,9 @@ describe('Component: Hero Search', () => {
   );
 
   it('should fetch the heroes', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroSearchService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        service: HeroSearchService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroSearchService, Location],
+      (router: Router, service: HeroSearchService, location: Location) => {
+        const f = createRoot(router, RootCmp);
         router.navigateByUrl('/search');
         advance(f);
         expect(location.path()).toEqual('/search');
@@ -86,11 +74,9 @@ describe('Component: Hero Search', () => {
   );
 
   it('should have [] if no term', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroSearchService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        service: HeroSearchService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroSearchService, Location],
+      (router: Router, service: HeroSearchService, location: Location) => {
+        const f = createRoot(router, RootCmp);
         router.navigateByUrl('/search');
         advance(f);
         expect(location.path()).toEqual('/search');
@@ -109,11 +95,9 @@ describe('Component: Hero Search', () => {
   );
 
   it('should have [] if there is an error', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroSearchService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        service: HeroSearchService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroSearchService, Location],
+      (router: Router, service: HeroSearchService, location: Location) => {
+        const f = createRoot(router, RootCmp);
         router.navigateByUrl('/search');
         advance(f);
         expect(location.path()).toEqual('/search');
@@ -132,11 +116,9 @@ describe('Component: Hero Search', () => {
   );
 
   it('should navigate to hero detail', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroSearchService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        service: HeroSearchService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroSearchService, Location],
+      (router: Router, service: HeroSearchService, location: Location) => {
+        const f = createRoot(router, RootCmp);
         router.navigateByUrl('/search');
         advance(f);
         expect(location.path()).toEqual('/search');
@@ -151,11 +133,9 @@ describe('Component: Hero Search', () => {
   );
 
   it('should call gotoDetail on list click', fakeAsync(
-    inject([Router, TestComponentBuilder, HeroSearchService, Location],
-      (router: Router, tcb: TestComponentBuilder,
-        service: HeroSearchService, location: Location) => {
-        const f = createRoot(tcb, router, RootCmp);
-        expect(location.path()).toEqual('/');
+    inject([Router, HeroSearchService, Location],
+      (router: Router, service: HeroSearchService, location: Location) => {
+        const f = createRoot(router, RootCmp);
         router.navigateByUrl('/search');
         advance(f);
         expect(location.path()).toEqual('/search');
