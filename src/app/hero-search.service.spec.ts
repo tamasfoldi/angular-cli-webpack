@@ -18,7 +18,7 @@ import {
 import { HeroSearchService } from './hero-search.service';
 
 describe('Service: Hero', () => {
-  const API_URL = "app/heroes/?name=";
+  const API_URL = 'app/heroes/?name=';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -33,7 +33,7 @@ describe('Service: Hero', () => {
           }, deps: [MockBackend, BaseRequestOptions]
         })
       ]
-    })
+    });
   });
 
   it('should search using the term',
@@ -55,4 +55,4 @@ describe('Service: Hero', () => {
       }))
   );
 
-})
+});
