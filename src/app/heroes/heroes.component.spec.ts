@@ -73,7 +73,7 @@ describe('Component: Heroes', () => {
   )
   );
 
-  it('should display "my-hero-detail" component', fakeAsync(
+  it('should display "app-hero-detail" component', fakeAsync(
     inject([Router, HeroService, Location],
       (router: Router, mockHeroService: HeroService, location: Location) => {
         const f = createRoot(router, RootCmp);
@@ -84,11 +84,11 @@ describe('Component: Heroes', () => {
 
         let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
         let heroNative = f.debugElement.nativeElement;
-        expect(heroNative.querySelector('my-hero-detail')).toBeFalsy();
+        expect(heroNative.querySelector('app-hero-detail')).toBeFalsy();
         expect(heroesCompRef.selectedHero).toBeUndefined();
         heroesCompRef.addHero();
         advance(f);
-        expect(heroNative.querySelector('my-hero-detail')).toBeTruthy();
+        expect(heroNative.querySelector('app-hero-detail')).toBeTruthy();
         expect(heroesCompRef.selectedHero).toBeNull();
       })
   )
@@ -145,11 +145,11 @@ describe('Component: Heroes', () => {
         spyOn(heroesCompRef, 'getHeroes');
         heroesCompRef.addingHero = true;
         advance(f);
-        expect(heroNative.querySelector('my-hero-detail')).toBeTruthy();
+        expect(heroNative.querySelector('app-hero-detail')).toBeTruthy();
         heroesCompRef.close(heroesCompRef.heroes[0]);
         advance(f);
 
-        expect(heroNative.querySelector('my-hero-detail')).toBeFalsy();
+        expect(heroNative.querySelector('app-hero-detail')).toBeFalsy();
         expect(heroesCompRef.addingHero).toBeFalsy();
         expect(heroesCompRef.getHeroes).toHaveBeenCalled();
       })
@@ -168,11 +168,11 @@ describe('Component: Heroes', () => {
         let heroNative = f.debugElement.nativeElement;
         heroesCompRef.addingHero = true;
         advance(f);
-        expect(heroNative.querySelector('my-hero-detail')).toBeTruthy();
+        expect(heroNative.querySelector('app-hero-detail')).toBeTruthy();
         heroesCompRef.onSelect({ id: 0, name: 'Test Hero' });
         advance(f);
 
-        expect(heroNative.querySelector('my-hero-detail')).toBeFalsy();
+        expect(heroNative.querySelector('app-hero-detail')).toBeFalsy();
         expect(heroesCompRef.addingHero).toBeFalsy();
         expect(heroesCompRef.selectedHero).toEqual({ id: 0, name: 'Test Hero' });
       })
@@ -192,7 +192,7 @@ describe('Component: Heroes', () => {
         spyOn(heroesCompRef, 'onSelect');
         heroesCompRef.addingHero = true;
         advance(f);
-        expect(heroNative.querySelector('my-hero-detail')).toBeTruthy();
+        expect(heroNative.querySelector('app-hero-detail')).toBeTruthy();
         heroNative.querySelector('li').click();
         advance(f);
 
