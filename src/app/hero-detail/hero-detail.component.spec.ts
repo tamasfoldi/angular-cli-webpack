@@ -2,7 +2,7 @@
 
 import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { configureTests, createRoot, advance, RootCmp, BlankCmp } from '../../helpers/route.provider.helper';
+import { configureTests, createRoot, advance, RootComponent, BlankComponent } from '../../helpers/route.provider.helper';
 import { HeroService } from '../hero.service';
 import { HeroMockService } from '../../helpers/hero.mock.service';
 import {
@@ -29,7 +29,7 @@ describe('Component: Detail', () => {
   it('should show the details of the hero', fakeAsync(
     inject([Router, HeroService, Location],
       (router: Router, mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(router, RootCmp);
+        const f = createRoot(router, RootComponent);
 
         router.navigateByUrl('/detail/0');
         advance(f);
@@ -46,7 +46,7 @@ describe('Component: Detail', () => {
   it('should bind the input value to the name of the hero', fakeAsync(
     inject([Router, HeroService, Location],
       (router: Router, mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(router, RootCmp);
+        const f = createRoot(router, RootComponent);
 
         router.navigateByUrl('/detail/0');
         advance(f);
@@ -65,7 +65,7 @@ describe('Component: Detail', () => {
   it('should call the back on click the button', fakeAsync(
     inject([Router, HeroService, Location],
       (router: Router, mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(router, RootCmp);
+        const f = createRoot(router, RootComponent);
 
         router.navigateByUrl('/detail/0');
         advance(f);
@@ -83,7 +83,7 @@ describe('Component: Detail', () => {
   it('should call the save on click the button', fakeAsync(
     inject([Router, HeroService, Location],
       (router: Router, mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(router, RootCmp);
+        const f = createRoot(router, RootComponent);
 
         router.navigateByUrl('/detail/0');
         advance(f);
@@ -101,7 +101,7 @@ describe('Component: Detail', () => {
   it('should save the hero detail', fakeAsync(
     inject([Router, HeroService, Location],
       (router: Router, mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(router, RootCmp);
+        const f = createRoot(router, RootComponent);
 
         router.navigateByUrl('/detail/0');
         advance(f);
@@ -120,7 +120,7 @@ describe('Component: Detail', () => {
   it('should set the error', fakeAsync(
     inject([Router, HeroService, Location],
       (router: Router, mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(router, RootCmp);
+        const f = createRoot(router, RootComponent);
 
         router.navigateByUrl('/detail/0');
         spyOn(mockHeroService, 'save').and.callFake(() => Promise.reject('save fail'));
@@ -141,7 +141,7 @@ describe('Component: Detail', () => {
   it('should emit null if no hero added to back', fakeAsync(
     inject([Router, HeroService, Location],
       (router: Router, mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(router, RootCmp);
+        const f = createRoot(router, RootComponent);
 
         router.navigateByUrl('/detail/0');
 
@@ -161,7 +161,7 @@ describe('Component: Detail', () => {
   it('should navigate back on back', fakeAsync(
     inject([Router, HeroService, Location],
       (router: Router, mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(router, RootCmp);
+        const f = createRoot(router, RootComponent);
 
         router.navigateByUrl('/detail/0');
 
@@ -179,7 +179,7 @@ describe('Component: Detail', () => {
   it('should emit the hero from the back param', fakeAsync(
     inject([Router, HeroService, Location],
       (router: Router, mockHeroService: HeroService, location: Location) => {
-        const f = createRoot(router, RootCmp);
+        const f = createRoot(router, RootComponent);
 
         router.navigateByUrl('/detail/0');
 

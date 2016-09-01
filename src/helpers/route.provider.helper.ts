@@ -21,7 +21,7 @@ import { HeroMockService } from './hero.mock.service';
 import { HeroMockSearchService } from './hero.search.mock.service';
 
 export const routerConfig: RouterConfig = [
-  { path: '', component: BlankCmp, pathMatch: 'full', redirectTo: '/dashboard' },
+  { path: '', component: BlankComponent, pathMatch: 'full', redirectTo: '/dashboard' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'detail/:id', component: HeroDetailComponent },
   { path: 'heroes', component: HeroesComponent },
@@ -65,43 +65,43 @@ export function advance(fixture: ComponentFixture<any>): void {
 }
 
 @Component({
-  selector: 'blank-cmp',
+  selector: 'app-blank-cmp',
   template: ``,
   directives: [ROUTER_DIRECTIVES]
 })
-export class BlankCmp {
+export class BlankComponent {
 }
 
 @Component({
-  selector: 'root-cmp',
+  selector: 'app-blank-cmp',
   template: `<router-outlet></router-outlet>`,
   directives: [ROUTER_DIRECTIVES],
-  entryComponents: [BlankCmp, DashboardComponent, HeroDetailComponent, HeroesComponent, HeroSearchComponent]
+  entryComponents: [BlankComponent, DashboardComponent, HeroDetailComponent, HeroesComponent, HeroSearchComponent]
 })
-export class RootCmp {
+export class RootComponent {
 }
 
 @NgModule({
   imports: [RouterTestingModule, CommonModule, FormsModule],
   entryComponents: [
-    BlankCmp,
-    RootCmp,
+    BlankComponent,
+    RootComponent,
     HeroSearchComponent,
     HeroesComponent,
     DashboardComponent,
     HeroDetailComponent
   ],
   exports: [
-    BlankCmp,
-    RootCmp,
+    BlankComponent,
+    RootComponent,
     HeroSearchComponent,
     HeroesComponent,
     DashboardComponent,
     HeroDetailComponent
   ],
   declarations: [
-    BlankCmp,
-    RootCmp,
+    BlankComponent,
+    RootComponent,
     HeroSearchComponent,
     HeroesComponent,
     DashboardComponent,

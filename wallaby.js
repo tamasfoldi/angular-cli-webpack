@@ -51,8 +51,6 @@ module.exports = function (wallaby) {
 
     setup: function () {
       window.__moduleBundler.loadTests();
-    },
-
-    debug: true
+    }
   };
 };

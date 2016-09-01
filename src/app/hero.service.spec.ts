@@ -85,7 +85,7 @@ describe('Hero Service', () => {
           mockBackend.connections.subscribe((c: MockConnection) => {
             expect(c.request.url).toBe(heroesUrl);
             expect(c.request.method).toBe(RequestMethod.Get);
-            c.mockError('ERROR TEST');
+            c.mockError(<any>'ERROR TEST');
           });
           service.getHeroes().then(() => { }, _rej => {
             errorResp = _rej;
