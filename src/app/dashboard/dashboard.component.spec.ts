@@ -69,7 +69,7 @@ describe('Component: Dashboard', () => {
         expect(location.path()).toEqual('/dashboard');
 
         let heroElement = <DashboardComponent>f.debugElement.children[1].componentInstance;
-        spyOn(heroElement, "gotoDetail");
+        spyOn(heroElement, 'gotoDetail');
         f.debugElement.nativeElement.querySelector('.hero').click();
         expect(heroElement.gotoDetail).toHaveBeenCalled();
       })

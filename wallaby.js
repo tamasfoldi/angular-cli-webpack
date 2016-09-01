@@ -2,7 +2,7 @@ var wallabyWebpack = require('wallaby-webpack');
 
 var webpackPostprocessor = wallabyWebpack({
   entryPatterns: [
-    'config/spec-bundle.js',
+    'src/wallabyTest.js',
     'src/**/*spec.js'
   ],
 
@@ -10,7 +10,12 @@ var webpackPostprocessor = wallabyWebpack({
     loaders: [
       {test: /\.css$/, loader: 'raw-loader'},
       {test: /\.html$/, loader: 'raw-loader'},
-      {test: /karma-require/, loader: 'null'}
+      {test: /\.js$/, loader: 'angular2-template-loader', exclude: /node_modules/},
+      {test: /\.json$/, loader: 'json-loader'},
+      {test: /\.styl$/, loaders: ['raw-loader', 'stylus-loader']},
+      {test: /\.less$/, loaders: ['raw-loader', 'less-loader']},
+      {test: /\.scss$|\.sass$/, loaders: ['raw-loader', 'sass-loader']},
+      {test: /\.(jpg|png)$/, loader: 'url-loader?limit=128000'}
     ]
   }
 });
@@ -21,8 +26,6 @@ module.exports = function (wallaby) {
 
   return {
     files: [
-      {pattern: 'config/spec-bundle.js', load: false},
-      {pattern: 'config/karma-require.js', load: false},
       {pattern: 'src/**/*.ts', load: false},
       {pattern: 'src/**/*.css', load: false},
       {pattern: 'src/**/*.html', load: false},
@@ -37,19 +40,19 @@ module.exports = function (wallaby) {
 
     env: {
       runner: require('phantomjs-prebuilt').path,
-      params: { runner: '--web-security=false' }
+      params: {runner: '--web-security=false'}
     },
 
     compilers: {
       '**/*.ts': wallaby.compilers.typeScript(compilerOptions)
     },
 
-    lowCoverageThreshold: 70, // 70%
-    slowTestThreshold: 200, //200ms
     postprocessor: webpackPostprocessor,
 
     setup: function () {
       window.__moduleBundler.loadTests();
-    }
+    },
+
+    debug: true
   };
 };

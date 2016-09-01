@@ -92,7 +92,7 @@ describe('Component: Detail', () => {
         let hero = f.debugElement.nativeElement;
         let herodetailRef = <HeroDetailComponent>f.debugElement.children[1].componentInstance;
         spyOn(herodetailRef, 'save');
-        hero.querySelectorAll('button')[1].click()
+        hero.querySelectorAll('button')[1].click();
 
         expect(herodetailRef.save).toHaveBeenCalled();
       })
@@ -189,10 +189,10 @@ describe('Component: Detail', () => {
         let emittedHero;
         herodetailRef.navigated = false;
         herodetailRef.close.subscribe(hero => emittedHero = hero);
-        herodetailRef.goBack({id: 0, name: "Test Hero 1"});
+        herodetailRef.goBack({id: 0, name: 'Test Hero 1'});
         advance(f);
 
-        expect(emittedHero).toEqual({id: 0, name: "Test Hero 1"});
+        expect(emittedHero).toEqual({id: 0, name: 'Test Hero 1'});
       })
   ));
 

@@ -18,7 +18,7 @@ import { HeroDetailComponent } from '../app/hero-detail/hero-detail.component';
 import { HeroesComponent } from '../app/heroes/heroes.component';
 import { HeroSearchComponent } from '../app/hero-search/hero-search.component';
 import { HeroMockService } from './hero.mock.service';
-import { HeroMockSearchService } from './hero.search.mock.service'
+import { HeroMockSearchService } from './hero.search.mock.service';
 
 export const routerConfig: RouterConfig = [
   { path: '', component: BlankCmp, pathMatch: 'full', redirectTo: '/dashboard' },

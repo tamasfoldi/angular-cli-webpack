@@ -34,7 +34,7 @@ export class HeroMockService {
   }
 
   delete(hero: Hero): Promise<Response> {
-    return Observable.of(new Response(new ResponseOptions({ status: 200, statusText: "OK" }))).toPromise();
+    return Observable.of(new Response(new ResponseOptions({ status: 200, statusText: 'OK' }))).toPromise();
   }
 
   // Add new Hero
@@ -45,11 +45,6 @@ export class HeroMockService {
   // Update existing Hero
   private put(hero: Hero): Promise<Hero> {
     return Observable.of(hero).toPromise();
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);
-    return Promise.reject(error.message || error);
   }
 
   getProviders(): Array<any> {

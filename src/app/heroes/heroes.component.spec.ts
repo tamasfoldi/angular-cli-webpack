@@ -44,14 +44,14 @@ describe('Component: Heroes', () => {
     inject([Router, HeroService, Location],
       (router: Router, mockHeroService: HeroService, location: Location) => {
         const f = createRoot(router, RootCmp);
-        spyOn(mockHeroService, "getHeroes").and.callFake(() => Promise.reject("getHeroes fail"));
+        spyOn(mockHeroService, 'getHeroes').and.callFake(() => Promise.reject('getHeroes fail'));
 
         router.navigateByUrl('/heroes');
         advance(f);
         expect(location.path()).toEqual('/heroes');
 
         let heroes = f.debugElement.nativeElement;
-        expect(heroes.querySelector('.error').innerHTML).toBe("getHeroes fail");
+        expect(heroes.querySelector('.error').innerHTML).toBe('getHeroes fail');
       })
   )
   );
@@ -66,7 +66,7 @@ describe('Component: Heroes', () => {
         expect(location.path()).toEqual('/heroes');
 
         let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
-        spyOn(heroesCompRef, "addHero");
+        spyOn(heroesCompRef, 'addHero');
         f.debugElement.nativeElement.querySelector('.add-hero').click();
         expect(heroesCompRef.addHero).toHaveBeenCalled();
       })
@@ -103,7 +103,7 @@ describe('Component: Heroes', () => {
         expect(location.path()).toEqual('/heroes');
 
         let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
-        spyOn(heroesCompRef, "getHeroes");
+        spyOn(heroesCompRef, 'getHeroes');
         advance(f);
 
         heroesCompRef.close(heroesCompRef.heroes[0]);
@@ -123,7 +123,7 @@ describe('Component: Heroes', () => {
         expect(location.path()).toEqual('/heroes');
 
         let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
-        spyOn(heroesCompRef, "getHeroes");
+        spyOn(heroesCompRef, 'getHeroes');
         heroesCompRef.close(undefined);
         advance(f);
 
@@ -142,7 +142,7 @@ describe('Component: Heroes', () => {
 
         let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
         let heroNative = f.debugElement.nativeElement;
-        spyOn(heroesCompRef, "getHeroes");
+        spyOn(heroesCompRef, 'getHeroes');
         heroesCompRef.addingHero = true;
         advance(f);
         expect(heroNative.querySelector('my-hero-detail')).toBeTruthy();
@@ -169,12 +169,12 @@ describe('Component: Heroes', () => {
         heroesCompRef.addingHero = true;
         advance(f);
         expect(heroNative.querySelector('my-hero-detail')).toBeTruthy();
-        heroesCompRef.onSelect({ id: 0, name: "Test Hero" });
+        heroesCompRef.onSelect({ id: 0, name: 'Test Hero' });
         advance(f);
 
         expect(heroNative.querySelector('my-hero-detail')).toBeFalsy();
         expect(heroesCompRef.addingHero).toBeFalsy();
-        expect(heroesCompRef.selectedHero).toEqual({ id: 0, name: "Test Hero" });
+        expect(heroesCompRef.selectedHero).toEqual({ id: 0, name: 'Test Hero' });
       })
   )
   );
@@ -189,7 +189,7 @@ describe('Component: Heroes', () => {
 
         let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
         let heroNative = f.debugElement.nativeElement;
-        spyOn(heroesCompRef, "onSelect");
+        spyOn(heroesCompRef, 'onSelect');
         heroesCompRef.addingHero = true;
         advance(f);
         expect(heroNative.querySelector('my-hero-detail')).toBeTruthy();
@@ -212,7 +212,7 @@ describe('Component: Heroes', () => {
 
         let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
         let heroNative = f.debugElement.nativeElement;
-        spyOn(heroesCompRef, "deleteHero");
+        spyOn(heroesCompRef, 'deleteHero');
         heroNative.querySelector('.delete-button').click();
         advance(f);
 
@@ -234,7 +234,7 @@ describe('Component: Heroes', () => {
         let heroesBeforeDelete = heroesCompRef.heroes;
         let heroToDelete = heroesCompRef.heroes[0];
         heroesCompRef.selectedHero = heroesCompRef.heroes[0];
-        heroesCompRef.deleteHero(heroToDelete, document.createEvent("Event"));
+        heroesCompRef.deleteHero(heroToDelete, document.createEvent('Event'));
         advance(f);
 
         expect(heroesCompRef.selectedHero).toBeNull();
@@ -256,7 +256,7 @@ describe('Component: Heroes', () => {
         let heroesBeforeDelete = heroesCompRef.heroes;
         let heroToDelete = heroesCompRef.heroes[0];
         heroesCompRef.selectedHero = null;
-        heroesCompRef.deleteHero(heroToDelete, document.createEvent("Event"));
+        heroesCompRef.deleteHero(heroToDelete, document.createEvent('Event'));
         advance(f);
 
         expect(heroesCompRef.heroes.length).toEqual(heroesBeforeDelete.length - 1);
@@ -269,16 +269,16 @@ describe('Component: Heroes', () => {
     inject([Router, HeroService, Location],
       (router: Router, mockHeroService: HeroService, location: Location) => {
         const f = createRoot(router, RootCmp);
-        spyOn(mockHeroService, "delete").and.callFake(() => Promise.reject("deleteHero fail"));
+        spyOn(mockHeroService, 'delete').and.callFake(() => Promise.reject('deleteHero fail'));
 
         router.navigateByUrl('/heroes');
         advance(f);
         expect(location.path()).toEqual('/heroes');
         let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
         let heroes = f.debugElement.nativeElement;
-        heroesCompRef.deleteHero({ id: 0, name: "Test Hero" }, document.createEvent('Event'));
+        heroesCompRef.deleteHero({ id: 0, name: 'Test Hero' }, document.createEvent('Event'));
         advance(f);
-        expect(heroes.querySelector('.error').innerHTML).toBe("deleteHero fail");
+        expect(heroes.querySelector('.error').innerHTML).toBe('deleteHero fail');
       })
   )
   );
@@ -293,7 +293,7 @@ describe('Component: Heroes', () => {
         expect(location.path()).toEqual('/heroes');
 
         let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
-        heroesCompRef.selectedHero = { id: 0, name: "Test Hero" };
+        heroesCompRef.selectedHero = { id: 0, name: 'Test Hero' };
         heroesCompRef.gotoDetail();
         advance(f);
         expect(location.path()).toEqual('/detail/0');

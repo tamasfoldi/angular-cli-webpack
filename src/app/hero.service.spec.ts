@@ -8,7 +8,7 @@ import {
 } from '@angular/core/testing';
 import {MockBackend, MockConnection} from '@angular/http/testing';
 import {provide} from '@angular/core';
-import {Observable} from "rxjs/Rx";
+import {Observable} from 'rxjs/Rx';
 import {
   Http,
   ConnectionBackend,
@@ -36,7 +36,7 @@ describe('Hero Service', () => {
           }, deps: [MockBackend, BaseRequestOptions]
         }),
       ]
-    })
+    });
   });
 
   describe('getHeroes', () => {
@@ -52,7 +52,7 @@ describe('Hero Service', () => {
               body: '{"data": [{"id": 0, "name": "Test Hero"}]}'
             });
             c.mockRespond(new Response(response));
-          })
+          });
           service.getHeroes().then(_res => {
             resp = _res;
           });
@@ -69,7 +69,7 @@ describe('Hero Service', () => {
             expect(c.request.url).toBe(heroesUrl);
             expect(c.request.method).toBe(RequestMethod.Get);
             c.mockError(new Error('ERROR TEST'));
-          })
+          });
           service.getHeroes().then(() => { }, _rej => {
             errorResp = _rej;
           });
@@ -86,7 +86,7 @@ describe('Hero Service', () => {
             expect(c.request.url).toBe(heroesUrl);
             expect(c.request.method).toBe(RequestMethod.Get);
             c.mockError('ERROR TEST');
-          })
+          });
           service.getHeroes().then(() => { }, _rej => {
             errorResp = _rej;
           });
@@ -103,8 +103,8 @@ describe('Hero Service', () => {
       inject([HeroService],
         fakeAsync((service: HeroService) => {
           let resp;
-          spyOn(service, "getHeroes").and.returnValue(
-            Observable.of([{ id: 0, name: "Test Hero" }]).toPromise()
+          spyOn(service, 'getHeroes').and.returnValue(
+            Observable.of([{ id: 0, name: 'Test Hero' }]).toPromise()
           );
           service.getHero(0).then(_res => {
             resp = _res;
@@ -128,7 +128,7 @@ describe('Hero Service', () => {
               body: '{"data": {"id": 1, "name": "Test Hero"}}'
             });
             c.mockRespond(new Response(response));
-          })
+          });
           service.save({ id: 1, name: 'Test Hero' }).then(_rsp => {
             resp = _rsp;
           });
@@ -148,7 +148,7 @@ describe('Hero Service', () => {
               body: '{"data": {"id": 0, "name": "Test Hero"}}'
             });
             c.mockRespond(new Response(response));
-          })
+          });
           service.save({ id: 0, name: 'Test Hero' }).then(_rsp => {
             resp = _rsp;
           });
@@ -168,15 +168,15 @@ describe('Hero Service', () => {
             expect(c.request.method).toBe(RequestMethod.Delete);
             let response = new ResponseOptions({
               status: 200,
-              statusText: "OK"
+              statusText: 'OK'
             });
             c.mockRespond(new Response(response));
-          })
+          });
           service.delete({ id: 0, name: 'Test Hero' }).then(_rsp => {
             resp = _rsp;
           });
           tick();
-          expect(resp).toEqual(new Response(new ResponseOptions({ status: 200, statusText: "OK" })));
+          expect(resp).toEqual(new Response(new ResponseOptions({ status: 200, statusText: 'OK' })));
         }))
     );
   });

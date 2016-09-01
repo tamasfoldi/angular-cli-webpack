@@ -34,7 +34,6 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
     { provide: XHRBackend, useClass: InMemoryBackendService }, // in-mem server
     { provide: SEED_DATA, useClass: InMemoryDataService }     // in-mem server data
   ],
-  entryComponents: [AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

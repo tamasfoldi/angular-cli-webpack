@@ -158,4 +158,4 @@ describe('Component: Hero Search', () => {
   )
   );
 
-})
+});
