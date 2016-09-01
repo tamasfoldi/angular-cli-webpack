@@ -8,4 +8,11 @@ export class WebpackPage {
   getParagraphText() {
     return element(by.css('app-root h1')).getText();
   }
+
+  navigateToFirstHerosPage() {
+    this.navigateTo();
+    let firstHeroOnDashboard = element.all(by.className('hero')).first();
+    firstHeroOnDashboard.click();
+    return firstHeroOnDashboard;
+  }
 }
