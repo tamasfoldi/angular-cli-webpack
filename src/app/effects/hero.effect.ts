@@ -61,10 +61,10 @@ export class HeroEffects {
   @Effect() addHeroToCollection$ = this.updates$
     .ofType(HeroActions.ADD_TO_COLLECTION)
     .map<Hero>(action => action.payload)
-    .mergeMap(Hero => this.db.insert('Heros', [ Hero ])
-      .mapTo(this.heroActions.addToCollectionSuccess(Hero))
+    .mergeMap(hero => this.db.insert('Heros', [ hero ])
+      .mapTo(this.heroActions.addToCollectionSuccess(hero))
       .catch(() => Observable.of(
-        this.heroActions.addToCollectionFail(Hero)
+        this.heroActions.addToCollectionFail(hero)
       ))
     );
 
@@ -72,10 +72,10 @@ export class HeroEffects {
   @Effect() removeHeroFromCollection$ = this.updates$
     .ofType(HeroActions.REMOVE_FROM_COLLECTION)
     .map<Hero>(action => action.payload)
-    .mergeMap(Hero => this.db.executeWrite('Heros', 'delete', [ Hero.id ])
-      .mapTo(this.heroActions.removeFromCollectionSuccess(Hero))
+    .mergeMap(hero => this.heroService.delete(hero)
+      .mapTo(this.heroActions.removeFromCollectionSuccess(hero))
       .catch(() => Observable.of(
-        this.heroActions.removeFromCollectionFail(Hero)
+        this.heroActions.removeFromCollectionFail(hero)
       ))
     );
 }

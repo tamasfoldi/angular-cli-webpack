@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState, getHeroCollection } from '../reducers/index';
 import { Observable } from 'rxjs/Rx';
+import { HeroActions } from '../actions/hero.actions';
 
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
@@ -22,7 +23,8 @@ export class HeroesComponent implements OnInit {
   constructor(
     private router: Router,
     private heroService: HeroService,
-    private store: Store<AppState>) {
+    private store: Store<AppState>,
+    private heroActions: HeroActions) {
   }
 
   getHeroes(): void {
@@ -41,14 +43,8 @@ export class HeroesComponent implements OnInit {
   }
 
   deleteHero(hero: Hero, event: any): void {
-    // event.stopPropagation();
-    // this.heroService
-    //   .delete(hero)
-    //   .then(res => {
-    //     this.heroes = this.heroes.filter(h => h !== hero);
-    //     if (this.selectedHero === hero) { this.selectedHero = null; }
-    //   })
-    //   .catch(error => this.error = error);
+    event.stopPropagation();
+    this.store.dispatch(this.heroActions.removeFromCollection(hero));
   }
 
   ngOnInit(): void {
