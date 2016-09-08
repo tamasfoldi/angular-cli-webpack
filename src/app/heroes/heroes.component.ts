@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { Store } from '@ngrx/store';
+import { AppState, getHeroCollection } from '../reducers/index';
+import { Observable } from 'rxjs/Rx';
+
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 
@@ -10,20 +14,20 @@ import { HeroService } from '../hero.service';
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent implements OnInit {
-  heroes: Hero[];
+  heroes: Observable<Hero[]>;
   selectedHero: Hero;
   addingHero = false;
   error: any;
 
   constructor(
     private router: Router,
-    private heroService: HeroService) { }
+    private heroService: HeroService,
+    private store: Store<AppState>) {
+  }
 
   getHeroes(): void {
-    this.heroService
-      .getHeroes()
-      .then(heroes => this.heroes = heroes)
-      .catch(error => this.error = error);
+    this.heroes = this.store.let(getHeroCollection());
+
   }
 
   addHero(): void {
@@ -37,14 +41,14 @@ export class HeroesComponent implements OnInit {
   }
 
   deleteHero(hero: Hero, event: any): void {
-    event.stopPropagation();
-    this.heroService
-      .delete(hero)
-      .then(res => {
-        this.heroes = this.heroes.filter(h => h !== hero);
-        if (this.selectedHero === hero) { this.selectedHero = null; }
-      })
-      .catch(error => this.error = error);
+    // event.stopPropagation();
+    // this.heroService
+    //   .delete(hero)
+    //   .then(res => {
+    //     this.heroes = this.heroes.filter(h => h !== hero);
+    //     if (this.selectedHero === hero) { this.selectedHero = null; }
+    //   })
+    //   .catch(error => this.error = error);
   }
 
   ngOnInit(): void {

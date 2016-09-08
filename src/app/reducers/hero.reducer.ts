@@ -62,7 +62,7 @@ export default function (state = initialState, action: Action): HeroesState {
 
 export function getHeroEntities() {
   return (state$: Observable<HeroesState>) => state$
-    .select(s => s.entities);
+    .select(s => {if(s) { return s.entities; }});
 };
 
 export function getHero(id: number) {
@@ -70,10 +70,10 @@ export function getHero(id: number) {
     .select(s => s.entities[id]);
 }
 
-export function getHeros(HeroIds: number[]) {
+export function getHeroes(heroIds: number[]) {
   return (state$: Observable<HeroesState>) => state$
     .let(getHeroEntities())
-    .map(entities => HeroIds.map(id => entities[id]));
+    .map(entities => heroIds.map(id => entities[id]));
 }
 
 export function hasHero(id: number) {

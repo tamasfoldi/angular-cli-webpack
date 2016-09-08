@@ -7,46 +7,46 @@ import { storeLogger } from 'ngrx-store-logger';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { combineReducers } from '@ngrx/store';
 import searchReducer, * as fromSearch from './search.reducer';
-import HeroesReducer, * as fromHeros from './hero.reducer';
+import heroesReducer, * as fromHeroes from './hero.reducer';
 import collectionReducer, * as fromCollection from './collection.reducer';
 
 export interface AppState {
   search: fromSearch.SearchState;
-  heroes: fromHeros.HeroesState;
+  heroes: fromHeroes.HeroesState;
   collection: fromCollection.CollectionState;
 }
 
 
 export default compose(storeFreeze, storeLogger(), combineReducers)({
   search: searchReducer,
-  Heros: HeroesReducer,
+  heroes: heroesReducer,
   collection: collectionReducer
 });
 
- export function getHerosState() {
+export function getHeroesState() {
   return (state$: Observable<AppState>) => state$
     .select(s => s.heroes);
 }
 
- export function getHeroEntities() {
-   return compose(fromHeros.getHeroEntities(), getHerosState());
- }
+export function getHeroEntities() {
+  return compose(fromHeroes.getHeroEntities(), getHeroesState());
+}
 
- export function getHero(id: number) {
-   return compose(fromHeros.getHero(id), getHerosState());
- }
+export function getHero(id: number) {
+  return compose(fromHeroes.getHero(id), getHeroesState());
+}
 
- export function hasHero(id: number) {
-   return compose(fromHeros.hasHero(id), getHerosState());
- }
+export function hasHero(id: number) {
+  return compose(fromHeroes.hasHero(id), getHeroesState());
+}
 
- export function getHeroes(heroIds: number[]) {
-   return compose(fromHeros.getHeros(heroIds), getHerosState());
- }
+export function getHeroes(heroIds: number[]) {
+  return compose(fromHeroes.getHeroes(heroIds), getHeroesState());
+}
 
 export function getSearchState() {
- return (state$: Observable<AppState>) => state$
-   .select(s => s.search);
+  return (state$: Observable<AppState>) => state$
+    .select(s => s.search);
 }
 
 export function getSearchHeroIds() {
@@ -93,5 +93,5 @@ export function isHeroInCollection(id: number) {
 export function getHeroCollection() {
   return (state$: Observable<AppState>) => state$
     .let(getCollectionHeroIds())
-    .switchMap(HeroIds => state$.let(getHeroes(HeroIds)));
+    .switchMap(heroIds => state$.let(getHeroes(heroIds)));
 }
