@@ -62,7 +62,7 @@ export default function (state = initialState, action: Action): HeroesState {
 
 export function getHeroEntities() {
   return (state$: Observable<HeroesState>) => state$
-    .select(s => {if(s) { return s.entities; }});
+    .select(s => s.entities);
 };
 
 export function getHero(id: number) {

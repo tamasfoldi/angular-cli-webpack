@@ -15,9 +15,11 @@ import { routing, routedComponents } from './app.routing';
 import { HeroService } from './hero.service';
 import { HeroSearchService } from './hero-search.service';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
-import { StoreModule} from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { DBModule, DBSchema } from '@ngrx/db';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { useLogMonitor, StoreLogMonitorModule } from '@ngrx/store-log-monitor';
 import { HeroEffects } from '../app/effects/hero.effect';
 import reducer from './reducers';
 import actions from './actions';
@@ -43,6 +45,13 @@ export default schema;
     routing,
     HttpModule,
     StoreModule.provideStore(reducer),
+    StoreDevtoolsModule.instrumentStore({
+      monitor: useLogMonitor({
+        visible: true,
+        position: 'right'
+      })
+    }),
+    StoreLogMonitorModule,
     EffectsModule.run(HeroEffects),
     DBModule.provideDB(schema)
   ],
