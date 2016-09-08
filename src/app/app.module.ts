@@ -13,15 +13,38 @@ import './rxjs-extensions';
 import { AppComponent } from './app.component';
 import { routing, routedComponents } from './app.routing';
 import { HeroService } from './hero.service';
+import { Hero } from './hero';
 import { HeroSearchService } from './hero-search.service';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
+import { StoreModule, ActionReducer, Action } from '@ngrx/store';
+
+export const INCREMENT = 'INCREMENT';
+export const DECREMENT = 'DECREMENT';
+export const RESET = 'RESET';
+
+export const heroReducer: ActionReducer<Hero> = (state = { id: 0, name: 'Test Hero 0'}, action: Action) => {
+    switch (action.type) {
+        case INCREMENT:
+            return { id: 1, name: 'Test Hero 0'};
+
+        case DECREMENT:
+            return { id: 0, name: 'Test Hero 0'};
+
+        case RESET:
+            return { id: 0, name: 'Test Hero 0'};
+
+        default:
+            return state;
+    }
+};
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     routing,
-    HttpModule
+    HttpModule,
+    StoreModule.provideStore({ heroes: heroReducer }, { hero: { id: 0, name: 'Test Hero 0'} })
   ],
   declarations: [
     AppComponent,
