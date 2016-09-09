@@ -106,7 +106,7 @@ describe('Component: Heroes', () => {
         spyOn(heroesCompRef, 'getHeroes');
         advance(f);
 
-        heroesCompRef.close(heroesCompRef.heroes[0]);
+        heroesCompRef.close(heroesCompRef.heroes$[0]);
         advance(f);
 
         expect(heroesCompRef.getHeroes).toHaveBeenCalled();
@@ -146,7 +146,7 @@ describe('Component: Heroes', () => {
         heroesCompRef.addingHero = true;
         advance(f);
         expect(heroNative.querySelector('app-hero-detail')).toBeTruthy();
-        heroesCompRef.close(heroesCompRef.heroes[0]);
+        heroesCompRef.close(heroesCompRef.heroes$[0]);
         advance(f);
 
         expect(heroNative.querySelector('app-hero-detail')).toBeFalsy();
@@ -197,7 +197,7 @@ describe('Component: Heroes', () => {
         advance(f);
 
         expect(heroesCompRef.onSelect).toHaveBeenCalled();
-        expect(heroesCompRef.onSelect).toHaveBeenCalledWith(heroesCompRef.heroes[0]);
+        expect(heroesCompRef.onSelect).toHaveBeenCalledWith(heroesCompRef.heroes$[0]);
       })
   )
   );
@@ -217,7 +217,7 @@ describe('Component: Heroes', () => {
         advance(f);
 
         expect(heroesCompRef.deleteHero).toHaveBeenCalled();
-        expect(heroesCompRef.deleteHero).toHaveBeenCalledWith(heroesCompRef.heroes[0], jasmine.any(Event));
+        expect(heroesCompRef.deleteHero).toHaveBeenCalledWith(heroesCompRef.heroes$[0], jasmine.any(Event));
       })
   )
   );
@@ -231,15 +231,15 @@ describe('Component: Heroes', () => {
         expect(location.path()).toEqual('/heroes');
 
         let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
-        let heroesBeforeDelete = heroesCompRef.heroes;
-        let heroToDelete = heroesCompRef.heroes[0];
-        heroesCompRef.selectedHero = heroesCompRef.heroes[0];
+        let heroesBeforeDelete = heroesCompRef.heroes$;
+        let heroToDelete = heroesCompRef.heroes$[0];
+        heroesCompRef.selectedHero = heroesCompRef.heroes$[0];
         heroesCompRef.deleteHero(heroToDelete, document.createEvent('Event'));
         advance(f);
 
         expect(heroesCompRef.selectedHero).toBeNull();
-        expect(heroesCompRef.heroes.length).toEqual(heroesBeforeDelete.length - 1);
-        expect(heroesCompRef.heroes.indexOf(heroToDelete)).toEqual(-1);
+        expect(heroesCompRef.heroes$.length).toEqual(heroesBeforeDelete.length - 1);
+        expect(heroesCompRef.heroes$.indexOf(heroToDelete)).toEqual(-1);
       })
   )
   );
@@ -253,14 +253,14 @@ describe('Component: Heroes', () => {
         expect(location.path()).toEqual('/heroes');
 
         let heroesCompRef = <HeroesComponent>f.debugElement.children[1].componentInstance;
-        let heroesBeforeDelete = heroesCompRef.heroes;
-        let heroToDelete = heroesCompRef.heroes[0];
+        let heroesBeforeDelete = heroesCompRef.heroes$;
+        let heroToDelete = heroesCompRef.heroes$[0];
         heroesCompRef.selectedHero = null;
         heroesCompRef.deleteHero(heroToDelete, document.createEvent('Event'));
         advance(f);
 
-        expect(heroesCompRef.heroes.length).toEqual(heroesBeforeDelete.length - 1);
-        expect(heroesCompRef.heroes.indexOf(heroToDelete)).toEqual(-1);
+        expect(heroesCompRef.heroes$.length).toEqual(heroesBeforeDelete.length - 1);
+        expect(heroesCompRef.heroes$.indexOf(heroToDelete)).toEqual(-1);
       })
   )
   );

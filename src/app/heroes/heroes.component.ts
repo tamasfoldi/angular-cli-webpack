@@ -15,7 +15,7 @@ import { HeroService } from '../hero.service';
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent implements OnInit {
-  heroes: Observable<Hero[]>;
+  heroes$: Observable<Hero[]>;
   selectedHero: Hero;
   addingHero = false;
   error: any;
@@ -28,7 +28,7 @@ export class HeroesComponent implements OnInit {
   }
 
   getHeroes(): void {
-    this.heroes = this.store.let(getHeroCollection());
+    this.heroes$ = this.store.let(getHeroCollection());
 
   }
 
