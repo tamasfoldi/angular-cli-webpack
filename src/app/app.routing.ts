@@ -1,8 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { HeroesComponent } from './heroes/heroes.component';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
+import { DashboardComponent, HeroesComponent, HeroDetailComponent } from './components';
 
 export const appRoutes: Routes = [
   {

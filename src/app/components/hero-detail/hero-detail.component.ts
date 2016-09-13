@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { HeroActions } from '../actions/hero.actions';
-import { AppState, getHero } from '../reducers/index';
-import { Hero } from '../hero';
+import { HeroActions } from '../../actions';
+import { AppState, getHero } from '../../reducers';
+import { Hero } from '../../interfaces';
 
 @Component({
   selector: 'app-hero-detail',

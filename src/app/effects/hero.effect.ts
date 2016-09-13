@@ -13,10 +13,9 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 
-import { HeroService } from '../hero.service';
-import { HeroSearchService } from '../hero-search.service';
+import { HeroService, HeroSearchService } from '../services';
 import { HeroActions } from '../actions';
-import { Hero } from '../hero';
+import { Hero } from '../interfaces';
 
 
 @Injectable()

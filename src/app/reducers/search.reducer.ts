@@ -4,7 +4,7 @@ import '@ngrx/core/add/operator/select';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
 
-import { Hero } from '../hero';
+import { Hero } from '../interfaces';
 import { HeroActions } from '../actions';
 
 

@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs/Rx';
 import { Store } from '@ngrx/store';
-import { HeroActions } from '../actions/hero.actions';
-import { AppState, getSearchResults } from '../reducers/index';
-import { Hero } from '../hero';
+import { HeroActions } from '../../actions';
+import { AppState, getSearchResults } from '../../reducers';
+import { Hero } from '../../interfaces';
 
 @Component({
   selector: 'app-hero-search',

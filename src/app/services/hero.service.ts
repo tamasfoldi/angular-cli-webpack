@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Rx';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Hero } from './hero';
+import { Hero } from '../interfaces';
 
 @Injectable()
 export class HeroService {

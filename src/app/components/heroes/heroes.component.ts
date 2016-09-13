@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
-import { AppState, getAllHeroes } from '../reducers/index';
+import { AppState, getAllHeroes } from '../../reducers';
 import { Observable } from 'rxjs/Rx';
-import { HeroActions } from '../actions/hero.actions';
+import { HeroActions } from '../../actions';
 
-import { Hero } from '../hero';
+import { Hero } from '../../interfaces';
 
 @Component({
   selector: 'app-heroes',

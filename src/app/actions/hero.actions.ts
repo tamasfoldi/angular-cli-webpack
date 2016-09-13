@@ -1,7 +1,7 @@
 /* tslint:disable:member-ordering */
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { Hero } from '../hero';
+import { Hero } from '../interfaces';
 
 
 /**
