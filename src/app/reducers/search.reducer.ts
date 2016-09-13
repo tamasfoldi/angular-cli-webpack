@@ -47,17 +47,7 @@ export default function(state = initialState, action: Action): SearchState {
   }
 }
 
-export function getStatus() {
-  return (state$: Observable<SearchState>) => state$
-    .select(s => s.loading);
-}
-
 export function getHeroes() {
   return (state$: Observable<SearchState>) => state$
     .select(s => s.heroes);
-}
-
-export function getQuery() {
-  return (state$: Observable<SearchState>) => state$
-    .select(s => s.query);
 }

@@ -21,8 +21,6 @@ export class HeroSearchComponent implements OnInit, OnDestroy {
     private heroActions: HeroActions) { }
 
   search(term: string): void {
-    // Push a search term into the observable stream.
-    console.log(term);
     this.store.dispatch(this.heroActions.search(term));
   }
 
@@ -34,7 +32,6 @@ export class HeroSearchComponent implements OnInit, OnDestroy {
       .map(event => (event.target as HTMLInputElement).value)
       .distinctUntilChanged()
       .subscribe(term => this.search(term));
-
   }
 
   ngOnDestroy(): void {

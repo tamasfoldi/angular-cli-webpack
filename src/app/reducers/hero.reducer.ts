@@ -63,9 +63,9 @@ export default function (state = initialState, action: Action): HeroesState {
 
     case HeroActions.EDIT_HERO_SUCCESS: {
       const hero: Hero = action.payload;
-      let heroes = [...state.entities.filter(h => hero.id !== h.id), hero];
+      let heroes = [hero, ...state.entities.filter(h => hero.id !== h.id)];
       heroes.sort((a, b) => {
-        return a.id > b.id ? 1 : 0;
+        return a.id > b.id ? 1 : -1;
       });
 
       return Object.assign({}, state, {
@@ -87,15 +87,4 @@ export function getAllHeroes() {
 export function getHero(id: number) {
   return (state$: Observable<HeroesState>) => state$
     .select(s => s.entities.find(h => h.id === id));
-}
-
-export function getHeroes(heroIds: number[]) {
-  return (state$: Observable<HeroesState>) => state$
-    .let(getAllHeroes())
-    .map(entities => heroIds.map(id => entities[id]));
-}
-
-export function hasHero(id: number) {
-  return (state$: Observable<HeroesState>) => state$
-    .select(s => s.entities.some(h => h.id === id));
 }

@@ -14,7 +14,6 @@ export interface AppState {
   heroes: fromHeroes.HeroesState;
 }
 
-
 export default compose(storeFreeze, storeLogger(), combineReducers)({
   search: searchReducer,
   heroes: heroesReducer
@@ -33,14 +32,6 @@ export function getHero(id: number) {
   return compose(fromHeroes.getHero(id), getHeroesState());
 }
 
-export function hasHero(id: number) {
-  return compose(fromHeroes.hasHero(id), getHeroesState());
-}
-
-export function getHeroes(heroIds: number[]) {
-  return compose(fromHeroes.getHeroes(heroIds), getHeroesState());
-}
-
 export function getSearchState() {
   return (state$: Observable<AppState>) => state$
     .select(s => s.search);
@@ -48,14 +39,6 @@ export function getSearchState() {
 
 export function getSearchHeroes() {
   return compose(fromSearch.getHeroes(), getSearchState());
-}
-
-export function getSearchStatus() {
-  return compose(fromSearch.getStatus(), getSearchState());
-}
-
-export function getSearchQuery() {
-  return compose(fromSearch.getQuery(), getSearchState());
 }
 
 export function getSearchResults() {

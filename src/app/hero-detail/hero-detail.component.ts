@@ -15,6 +15,7 @@ export class HeroDetailComponent implements OnInit {
   @Output() close = new EventEmitter();
   error: any;
   navigated = false; // true if navigated here
+  name: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +28,7 @@ export class HeroDetailComponent implements OnInit {
       if (params['id'] !== undefined) {
         let id = +params['id'];
         this.navigated = true;
-        this.store.let(getHero(id)).subscribe( hero => this.hero = hero);
+        this.store.let(getHero(id)).subscribe(hero => { this.hero = hero; this.name = hero.name; });
       } else {
         this.navigated = false;
         this.hero = new Hero();
@@ -36,10 +37,11 @@ export class HeroDetailComponent implements OnInit {
   }
 
   save(): void {
+    let hero = Object.assign({}, this.hero, { name: this.name });
     if (!this.hero.id) {
-      this.store.dispatch(this.heroActions.addHero(this.hero));
+      this.store.dispatch(this.heroActions.addHero(hero));
     } else {
-      this.store.dispatch(this.heroActions.editHero(this.hero));
+      this.store.dispatch(this.heroActions.editHero(hero));
     }
     this.goBack(this.hero);
   }
