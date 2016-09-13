@@ -58,7 +58,7 @@ export class HeroEffects {
     .mapTo(this.heroActions.searchComplete([]));
 
 
-  @Effect() addHeroToCollection$ = this.updates$
+  @Effect() eddHero$ = this.updates$
     .ofType(HeroActions.ADD_HERO)
     .map<Hero>(action => action.payload)
     .mergeMap(hero => this.heroService.save(hero)
@@ -68,8 +68,18 @@ export class HeroEffects {
       ))
     );
 
+  @Effect() editHero$ = this.updates$
+    .ofType(HeroActions.EDIT_HERO)
+    .map<Hero>(action => action.payload)
+    .mergeMap(hero => this.heroService.save(hero)
+      .map(h => this.heroActions.editHeroSuccess(h))
+      .catch(() => Observable.of(
+        this.heroActions.editHeroFail(hero)
+      ))
+    );
 
-  @Effect() removeHeroFromCollection$ = this.updates$
+
+  @Effect() removeHero$ = this.updates$
     .ofType(HeroActions.REMOVE_HERO)
     .map<Hero>(action => action.payload)
     .mergeMap(hero => this.heroService.delete(hero)

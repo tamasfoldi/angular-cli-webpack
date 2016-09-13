@@ -61,7 +61,7 @@ export class HeroService {
 
     return this.http
       .put(url, JSON.stringify(hero), { headers: headers })
-      .map(rsp => rsp.json().data as Hero);
+      .map(rsp => hero);
   }
 
   private handleError(error: any): Promise<any> {

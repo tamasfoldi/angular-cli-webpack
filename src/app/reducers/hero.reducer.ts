@@ -44,7 +44,6 @@ export default function (state = initialState, action: Action): HeroesState {
     case HeroActions.ADD_HERO_SUCCESS:
     case HeroActions.REMOVE_HERO_FAIL: {
       const hero: Hero = action.payload;
-      console.log(hero);
       if (state.entities.some(h => h.id === hero.id)) {
         return state;
       }
@@ -60,6 +59,18 @@ export default function (state = initialState, action: Action): HeroesState {
 
       return Object.assign({}, state, {
         entities: state.entities.filter(h => h.id !== hero.id)
+      });
+    }
+
+    case HeroActions.EDIT_HERO_SUCCESS: {
+      const hero: Hero = action.payload;
+      let heroes = [...state.entities.filter(h => hero.id !== h.id), hero];
+      heroes.sort((a, b) => {
+        return a.id > b.id ? 1 : 0;
+      });
+
+      return Object.assign({}, state, {
+        entities: heroes
       });
     }
 

@@ -100,4 +100,28 @@ export class HeroActions {
       payload: hero
     };
   }
+
+  static EDIT_HERO = '[Hero] Edit Hero';
+  editHero(hero: Hero): Action {
+    return {
+      type: HeroActions.EDIT_HERO,
+      payload: hero
+    };
+  }
+
+  static EDIT_HERO_SUCCESS = '[Hero] Edit Hero Success';
+  editHeroSuccess(hero: Hero): Action {
+    return {
+      type: HeroActions.EDIT_HERO_SUCCESS,
+      payload: hero
+    };
+  }
+
+  static EDIT_HERO_FAIL = '[Hero] Edit Hero Fail';
+  editHeroFail(hero: Hero): Action {
+    return {
+      type: HeroActions.EDIT_HERO_FAIL,
+      payload: hero
+    };
+  }
 }
