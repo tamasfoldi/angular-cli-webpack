@@ -33,9 +33,9 @@ export class HeroEffects {
 
   @Effect() openDB$ = this.db.open('Heros_app').filter(() => false);
 
-  @Effect() loadCollectionOnInit$ = Observable.of(this.heroActions.loadHeroes());
+  @Effect() loadHeroesOnInit$ = Observable.of(this.heroActions.loadHeroes());
 
-  @Effect() loadCollection$ = this.updates$
+  @Effect() loadHeroes$ = this.updates$
     .ofType(HeroActions.LOAD_HEROES)
     .switchMapTo(this.heroService.getHeroes())
     .map((Heros: Hero[]) => this.heroActions.loadHeroesSuccess(Heros));
