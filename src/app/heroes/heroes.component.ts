@@ -7,7 +7,6 @@ import { Observable } from 'rxjs/Rx';
 import { HeroActions } from '../actions/hero.actions';
 
 import { Hero } from '../hero';
-import { HeroService } from '../hero.service';
 
 @Component({
   selector: 'app-heroes',
@@ -22,7 +21,6 @@ export class HeroesComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private heroService: HeroService,
     private store: Store<AppState>,
     private heroActions: HeroActions) {
   }

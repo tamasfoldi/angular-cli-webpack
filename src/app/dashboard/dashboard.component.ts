@@ -5,7 +5,6 @@ import { AppState, getAllHeroes } from '../reducers/index';
 import { Observable } from 'rxjs/Rx';
 import { HeroActions } from '../actions/hero.actions';
 import { Hero } from '../hero';
-import { HeroService } from '../hero.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +15,6 @@ export class DashboardComponent implements OnInit {
   heroes: Observable<Hero[]>;
   constructor(
     private router: Router,
-    private heroService: HeroService,
     private store: Store<AppState>,
     private heroActions: HeroActions) {
   }

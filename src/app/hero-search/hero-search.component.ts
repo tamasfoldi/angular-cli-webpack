@@ -4,7 +4,6 @@ import { Observable, Subject } from 'rxjs/Rx';
 import { Store } from '@ngrx/store';
 import { HeroActions } from '../actions/hero.actions';
 import { AppState, getSearchResults } from '../reducers/index';
-import { HeroSearchService } from '../hero-search.service';
 import { Hero } from '../hero';
 
 @Component({
@@ -17,24 +16,25 @@ export class HeroSearchComponent implements OnInit, OnDestroy {
   keyup$ = new Subject<KeyboardEvent>();
 
   constructor(
-    private heroSearchService: HeroSearchService,
     private router: Router,
     private store: Store<AppState>,
     private heroActions: HeroActions) { }
 
   search(term: string): void {
     // Push a search term into the observable stream.
+    console.log(term);
     this.store.dispatch(this.heroActions.search(term));
   }
 
   ngOnInit(): void {
+    this.heroes = this.store.let(getSearchResults());
+
     this.keyup$
       .debounceTime(300)
       .map(event => (event.target as HTMLInputElement).value)
       .distinctUntilChanged()
       .subscribe(term => this.search(term));
 
-    this.heroes = this.store.let(getSearchResults());
   }
 
   ngOnDestroy(): void {

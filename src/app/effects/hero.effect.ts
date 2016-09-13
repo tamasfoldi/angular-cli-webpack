@@ -12,7 +12,6 @@ import 'rxjs/add/observable/of';
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
-import { Database } from '@ngrx/db';
 
 import { HeroService } from '../hero.service';
 import { HeroSearchService } from '../hero-search.service';
@@ -27,11 +26,8 @@ export class HeroEffects {
     private updates$: Actions,
     private heroService: HeroService,
     private heroSearchService: HeroSearchService,
-    private db: Database,
     private heroActions: HeroActions
   ) { }
-
-  @Effect() openDB$ = this.db.open('Heros_app').filter(() => false);
 
   @Effect() loadHeroesOnInit$ = Observable.of(this.heroActions.loadHeroes());
 

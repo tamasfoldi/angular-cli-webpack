@@ -86,7 +86,7 @@ export function getAllHeroes() {
 
 export function getHero(id: number) {
   return (state$: Observable<HeroesState>) => state$
-    .select(s => s.entities[id]);
+    .select(s => s.entities.find(h => h.id === id));
 }
 
 export function getHeroes(heroIds: number[]) {
