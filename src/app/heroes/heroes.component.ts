@@ -43,7 +43,9 @@ export class HeroesComponent implements OnInit {
   deleteHero(hero: Hero, event: any): void {
     event.stopPropagation();
     this.store.dispatch(this.heroActions.removeHero(hero));
-    this.selectedHero = null;
+    if (this.selectedHero.id === hero.id) {
+      this.selectedHero = null;
+    }
   }
 
   ngOnInit(): void {
