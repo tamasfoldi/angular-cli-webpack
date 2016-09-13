@@ -28,7 +28,11 @@ export class HeroDetailComponent implements OnInit {
       if (params['id'] !== undefined) {
         let id = +params['id'];
         this.navigated = true;
-        this.store.let(getHero(id)).subscribe(hero => { this.hero = hero; this.name = hero.name; });
+        this.store.let(getHero(id))
+          .subscribe(hero => {
+            this.hero = hero;
+            this.name = hero && hero.name ? hero.name : '';
+          });
       } else {
         this.navigated = false;
         this.hero = new Hero();
