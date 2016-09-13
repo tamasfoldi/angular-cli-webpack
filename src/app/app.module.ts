@@ -46,7 +46,6 @@ export default schema;
     HttpModule,
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentStore({
-      maxAge: 5,
       monitor: useLogMonitor({
         position: 'right',
         visible: true

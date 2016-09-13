@@ -61,8 +61,8 @@ export class HeroEffects {
   @Effect() addHeroToCollection$ = this.updates$
     .ofType(HeroActions.ADD_HERO)
     .map<Hero>(action => action.payload)
-    .mergeMap(hero => this.db.insert('Heros', [ hero ])
-      .mapTo(this.heroActions.addHeroSuccess(hero))
+    .mergeMap(hero => this.heroService.save(hero)
+      .map(h => this.heroActions.addHeroSuccess(h))
       .catch(() => Observable.of(
         this.heroActions.addHeroFail(hero)
       ))

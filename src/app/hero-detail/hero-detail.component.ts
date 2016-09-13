@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-
+import { Store } from '@ngrx/store';
+import { HeroActions } from '../actions/hero.actions';
+import { AppState, getAllHeroes } from '../reducers/index';
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 
@@ -17,7 +19,9 @@ export class HeroDetailComponent implements OnInit {
 
   constructor(
     private heroService: HeroService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private store: Store<AppState>,
+    private heroActions: HeroActions) {
   }
 
   ngOnInit(): void {
@@ -35,13 +39,14 @@ export class HeroDetailComponent implements OnInit {
   }
 
   save(): void {
-    this.heroService
-        .save(this.hero)
-        .then(hero => {
-          this.hero = hero; // saved hero, w/ id if new
-          this.goBack(hero);
-        })
-        .catch(error => this.error = error); // TODO: Display error message
+    // this.heroService
+    //     .save(this.hero)
+    //     .then(hero => {
+    //       this.hero = hero; // saved hero, w/ id if new
+    //       this.goBack(hero);
+    //     })
+    //     .catch(error => this.error = error); // TODO: Display error message
+    this.store.dispatch(this.heroActions.addHero(this.hero));
   }
 
   goBack(savedHero: Hero = null): void {

@@ -25,7 +25,7 @@ export class HeroService {
       .then(heroes => heroes.find(hero => hero.id === id));
   }
 
-  save(hero: Hero): Promise<Hero> {
+  save(hero: Hero): Observable<Hero> {
     if (hero.id) {
       return this.put(hero);
     }
@@ -42,20 +42,18 @@ export class HeroService {
   }
 
   // Add new Hero
-  private post(hero: Hero): Promise<Hero> {
+  private post(hero: Hero): Observable<Hero> {
     let headers = new Headers({
       'Content-Type': 'application/json'
     });
 
     return this.http
       .post(this.heroesUrl, JSON.stringify(hero), { headers: headers })
-      .toPromise()
-      .then(res => res.json().data)
-      .catch(this.handleError);
+      .map(rsp => rsp.json().data as Hero);
   }
 
   // Update existing Hero
-  private put(hero: Hero): Promise<Hero> {
+  private put(hero: Hero): Observable<Hero> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
@@ -63,9 +61,7 @@ export class HeroService {
 
     return this.http
       .put(url, JSON.stringify(hero), { headers: headers })
-      .toPromise()
-      .then(() => hero)
-      .catch(this.handleError);
+      .map(rsp => rsp.json().data as Hero);
   }
 
   private handleError(error: any): Promise<any> {

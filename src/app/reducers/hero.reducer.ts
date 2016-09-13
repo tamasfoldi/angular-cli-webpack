@@ -44,7 +44,7 @@ export default function (state = initialState, action: Action): HeroesState {
     case HeroActions.ADD_HERO_SUCCESS:
     case HeroActions.REMOVE_HERO_FAIL: {
       const hero: Hero = action.payload;
-
+      console.log(hero);
       if (state.entities.some(h => h.id === hero.id)) {
         return state;
       }
