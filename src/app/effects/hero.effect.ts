@@ -43,22 +43,22 @@ export class HeroEffects {
 
   @Effect() search$ = this.updates$
     .ofType(HeroActions.SEARCH)
-    .map<string>(action => JSON.stringify(action.payload))
+    .map<string>(action => action.payload)
     .filter(query => query !== '')
     .switchMap(query => this.heroSearchService.search(query)
-      .map(Heros => this.heroActions.searchComplete(Heros))
+      .map(heroes => this.heroActions.searchComplete(heroes))
       .catch(() => Observable.of(this.heroActions.searchComplete([])))
     );
 
 
   @Effect() clearSearch$ = this.updates$
     .ofType(HeroActions.SEARCH)
-    .map<string>(action => JSON.stringify(action.payload))
+    .map<string>(action => action.payload)
     .filter(query => query === '')
     .mapTo(this.heroActions.searchComplete([]));
 
 
-  @Effect() eddHero$ = this.updates$
+  @Effect() addHero$ = this.updates$
     .ofType(HeroActions.ADD_HERO)
     .map<Hero>(action => action.payload)
     .mergeMap(hero => this.heroService.save(hero)

@@ -46,8 +46,8 @@ export function getSearchState() {
     .select(s => s.search);
 }
 
-export function getSearchHeroIds() {
-  return compose(fromSearch.getHeroIds(), getSearchState());
+export function getSearchHeroes() {
+  return compose(fromSearch.getHeroes(), getSearchState());
 }
 
 export function getSearchStatus() {
@@ -60,6 +60,5 @@ export function getSearchQuery() {
 
 export function getSearchResults() {
   return (state$: Observable<AppState>) => state$
-    .let(getSearchHeroIds())
-    .switchMap(HeroIds => state$.let(getHeroes(HeroIds)));
+    .let(getSearchHeroes());
 }

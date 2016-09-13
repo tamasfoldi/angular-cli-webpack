@@ -9,13 +9,13 @@ import { HeroActions } from '../actions';
 
 
 export interface SearchState {
-  ids: number[];
+  heroes: Hero[];
   loading: boolean;
   query: string;
 };
 
 const initialState: SearchState = {
-  ids: [],
+  heroes: [],
   loading: false,
   query: ''
 };
@@ -23,19 +23,19 @@ const initialState: SearchState = {
 export default function(state = initialState, action: Action): SearchState {
   switch (action.type) {
     case HeroActions.SEARCH: {
-      const QUERY = action.payload;
+      const query = action.payload;
 
       return Object.assign({}, state, {
-        QUERY,
+        query,
         loading: true
       });
     }
 
     case HeroActions.SEARCH_COMPLETE: {
-      const HEROES: Hero[] = action.payload;
+      const heroes: Hero[] = action.payload;
 
       return {
-        ids: HEROES.map(Hero => Hero.id),
+        heroes: heroes,
         loading: false,
         query: state.query
       };
@@ -52,9 +52,9 @@ export function getStatus() {
     .select(s => s.loading);
 }
 
-export function getHeroIds() {
+export function getHeroes() {
   return (state$: Observable<SearchState>) => state$
-    .select(s => s.ids);
+    .select(s => s.heroes);
 }
 
 export function getQuery() {

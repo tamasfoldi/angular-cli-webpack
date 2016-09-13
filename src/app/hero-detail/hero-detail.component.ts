@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { HeroActions } from '../actions/hero.actions';
-import { AppState, getAllHeroes } from '../reducers/index';
+import { AppState } from '../reducers/index';
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 

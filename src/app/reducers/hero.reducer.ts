@@ -19,7 +19,6 @@ const initialState: HeroesState = {
 
 export default function (state = initialState, action: Action): HeroesState {
   switch (action.type) {
-    case HeroActions.SEARCH_COMPLETE:
     case HeroActions.LOAD_HEROES_SUCCESS: {
       const heroes: Hero[] = action.payload;
       const new_heroes = heroes.filter(hero => !state.entities[hero.id]);
