@@ -8,19 +8,16 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import { combineReducers } from '@ngrx/store';
 import searchReducer, * as fromSearch from './search.reducer';
 import heroesReducer, * as fromHeroes from './hero.reducer';
-import collectionReducer, * as fromCollection from './collection.reducer';
 
 export interface AppState {
   search: fromSearch.SearchState;
   heroes: fromHeroes.HeroesState;
-  collection: fromCollection.CollectionState;
 }
 
 
 export default compose(storeFreeze, storeLogger(), combineReducers)({
   search: searchReducer,
-  heroes: heroesReducer,
-  collection: collectionReducer
+  heroes: heroesReducer
 });
 
 export function getHeroesState() {
@@ -28,8 +25,8 @@ export function getHeroesState() {
     .select(s => s.heroes);
 }
 
-export function getHeroEntities() {
-  return compose(fromHeroes.getHeroEntities(), getHeroesState());
+export function getAllHeroes() {
+  return compose(fromHeroes.getAllHeroes(), getHeroesState());
 }
 
 export function getHero(id: number) {
@@ -65,33 +62,4 @@ export function getSearchResults() {
   return (state$: Observable<AppState>) => state$
     .let(getSearchHeroIds())
     .switchMap(HeroIds => state$.let(getHeroes(HeroIds)));
-}
-
-
-
-export function getCollectionState() {
-  return (state$: Observable<AppState>) => state$
-    .select(s => s.collection);
-}
-
-export function getCollectionLoaded() {
-  return compose(fromCollection.getLoaded(), getCollectionState());
-}
-
-export function getCollectionLoading() {
-  return compose(fromCollection.getLoading(), getCollectionState());
-}
-
-export function getCollectionHeroIds() {
-  return compose(fromCollection.getHeroIds(), getCollectionState());
-}
-
-export function isHeroInCollection(id: number) {
-  return compose(fromCollection.isHeroInCollection(id), getCollectionState());
-}
-
-export function getHeroCollection() {
-  return (state$: Observable<AppState>) => state$
-    .let(getCollectionHeroIds())
-    .switchMap(heroIds => state$.let(getHeroes(heroIds)));
 }

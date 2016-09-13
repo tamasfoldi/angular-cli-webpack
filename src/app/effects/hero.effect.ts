@@ -33,12 +33,12 @@ export class HeroEffects {
 
   @Effect() openDB$ = this.db.open('Heros_app').filter(() => false);
 
-  @Effect() loadCollectionOnInit$ = Observable.of(this.heroActions.loadCollection());
+  @Effect() loadCollectionOnInit$ = Observable.of(this.heroActions.loadHeroes());
 
   @Effect() loadCollection$ = this.updates$
-    .ofType(HeroActions.LOAD_COLLECTION)
+    .ofType(HeroActions.LOAD_HEROES)
     .switchMapTo(this.heroService.getHeroes())
-    .map((Heros: Hero[]) => this.heroActions.loadCollectionSuccess(Heros));
+    .map((Heros: Hero[]) => this.heroActions.loadHeroesSuccess(Heros));
 
 
   @Effect() search$ = this.updates$
@@ -59,23 +59,23 @@ export class HeroEffects {
 
 
   @Effect() addHeroToCollection$ = this.updates$
-    .ofType(HeroActions.ADD_TO_COLLECTION)
+    .ofType(HeroActions.ADD_HERO)
     .map<Hero>(action => action.payload)
     .mergeMap(hero => this.db.insert('Heros', [ hero ])
-      .mapTo(this.heroActions.addToCollectionSuccess(hero))
+      .mapTo(this.heroActions.addHeroSuccess(hero))
       .catch(() => Observable.of(
-        this.heroActions.addToCollectionFail(hero)
+        this.heroActions.addHeroFail(hero)
       ))
     );
 
 
   @Effect() removeHeroFromCollection$ = this.updates$
-    .ofType(HeroActions.REMOVE_FROM_COLLECTION)
+    .ofType(HeroActions.REMOVE_HERO)
     .map<Hero>(action => action.payload)
     .mergeMap(hero => this.heroService.delete(hero)
-      .mapTo(this.heroActions.removeFromCollectionSuccess(hero))
+      .mapTo(this.heroActions.removeHeroSuccess(hero))
       .catch(() => Observable.of(
-        this.heroActions.removeFromCollectionFail(hero)
+        this.heroActions.removeHeroFail(hero)
       ))
     );
 }

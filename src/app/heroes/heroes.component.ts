@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
-import { AppState, getHeroCollection } from '../reducers/index';
+import { AppState, getAllHeroes } from '../reducers/index';
 import { Observable } from 'rxjs/Rx';
 import { HeroActions } from '../actions/hero.actions';
 
@@ -28,7 +28,7 @@ export class HeroesComponent implements OnInit {
   }
 
   getHeroes(): void {
-    this.heroes$ = this.store.let(getHeroCollection());
+    this.heroes$ = this.store.let(getAllHeroes());
 
   }
 
@@ -44,7 +44,7 @@ export class HeroesComponent implements OnInit {
 
   deleteHero(hero: Hero, event: any): void {
     event.stopPropagation();
-    this.store.dispatch(this.heroActions.removeFromCollection(hero));
+    this.store.dispatch(this.heroActions.removeHero(hero));
   }
 
   ngOnInit(): void {

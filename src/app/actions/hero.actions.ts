@@ -30,74 +30,74 @@ export class HeroActions {
     };
   }
 
-  static ADD_TO_COLLECTION = '[Hero] Add to Collection';
-  addToCollection(Hero: Hero): Action {
+  static ADD_HERO = '[Hero] Add to Collection';
+  addHero(hero: Hero): Action {
     return {
-      type: HeroActions.ADD_TO_COLLECTION,
-      payload: Hero
+      type: HeroActions.ADD_HERO,
+      payload: hero
     };
   }
 
-  static ADD_TO_COLLECTION_SUCCESS = '[Hero] Add to Collection Success';
-  addToCollectionSuccess(Hero: Hero): Action {
+  static ADD_HERO_SUCCESS = '[Hero] Add to Collection Success';
+  addHeroSuccess(hero: Hero): Action {
     return {
-      type: HeroActions.ADD_TO_COLLECTION_SUCCESS,
-      payload: Hero
+      type: HeroActions.ADD_HERO_SUCCESS,
+      payload: hero
     };
   }
 
-  static ADD_TO_COLLECTION_FAIL = '[Hero] Add to Collection Fail';
-  addToCollectionFail(Hero: Hero): Action {
+  static ADD_HERO_FAIL = '[Hero] Add to Collection Fail';
+  addHeroFail(hero: Hero): Action {
     return {
-      type: HeroActions.ADD_TO_COLLECTION_FAIL,
-      payload: Hero
+      type: HeroActions.ADD_HERO_FAIL,
+      payload: hero
     };
   }
 
-  static REMOVE_FROM_COLLECTION = '[Hero] Remove from Collection';
-  removeFromCollection(Hero: Hero): Action {
+  static REMOVE_HERO = '[Hero] Remove from Collection';
+  removeHero(hero: Hero): Action {
     return {
-      type: HeroActions.REMOVE_FROM_COLLECTION,
-      payload: Hero
+      type: HeroActions.REMOVE_HERO,
+      payload: hero
     };
   }
 
-  static REMOVE_FROM_COLLECTION_SUCCESS = '[Hero] Remove From Collection Success';
-  removeFromCollectionSuccess(Hero: Hero): Action {
+  static REMOVE_HERO_SUCCESS = '[Hero] Remove From Collection Success';
+  removeHeroSuccess(hero: Hero): Action {
     return {
-      type: HeroActions.REMOVE_FROM_COLLECTION_SUCCESS,
-      payload: Hero
+      type: HeroActions.REMOVE_HERO_SUCCESS,
+      payload: hero
     };
   }
 
-  static REMOVE_FROM_COLLECTION_FAIL = '[Hero] Remove From Collection Fail';
-  removeFromCollectionFail(Hero: Hero): Action {
+  static REMOVE_HERO_FAIL = '[Hero] Remove From Collection Fail';
+  removeHeroFail(hero: Hero): Action {
     return {
-      type: HeroActions.REMOVE_FROM_COLLECTION_FAIL,
-      payload: Hero
+      type: HeroActions.REMOVE_HERO_FAIL,
+      payload: hero
     };
   }
 
-  static LOAD_COLLECTION = '[Hero] Load Collection';
-  loadCollection(): Action {
+  static LOAD_HEROES = '[Hero] Load Collection';
+  loadHeroes(): Action {
     return {
-      type: HeroActions.LOAD_COLLECTION
+      type: HeroActions.LOAD_HEROES
     };
   }
 
-  static LOAD_COLLECTION_SUCCESS = '[Hero] Load Collection Success';
-  loadCollectionSuccess(Heros: Hero[]): Action {
+  static LOAD_HEROES_SUCCESS = '[Hero] Load Collection Success';
+  loadHeroesSuccess(heroes: Hero[]): Action {
     return {
-      type: HeroActions.LOAD_COLLECTION_SUCCESS,
-      payload: Heros
+      type: HeroActions.LOAD_HEROES_SUCCESS,
+      payload: heroes
     };
   }
 
   static LOAD_HERO = '[Hero] Load Hero';
-  loadHero(Hero: Hero): Action {
+  loadHero(hero: Hero): Action {
     return {
       type: HeroActions.LOAD_HERO,
-      payload: Hero
+      payload: hero
     };
   }
 }

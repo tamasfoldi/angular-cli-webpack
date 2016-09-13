@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState, getHeroCollection } from '../reducers/index';
+import { AppState, getAllHeroes } from '../reducers/index';
 import { Observable } from 'rxjs/Rx';
 import { HeroActions } from '../actions/hero.actions';
 import { Hero } from '../hero';
@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.heroes = this.store.let(getHeroCollection()).map(heroes => heroes.slice(1, 5));
+    this.heroes = this.store.let(getAllHeroes()).map(heroes => heroes.slice(1, 5));
   }
 
   gotoDetail(hero: Hero): void {
