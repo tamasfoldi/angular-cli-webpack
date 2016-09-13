@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subject } from 'rxjs/Rx';
 import { Store } from '@ngrx/store';
 import { HeroActions } from '../actions/hero.actions';
 import { AppState, getSearchResults } from '../reducers/index';
@@ -14,12 +14,13 @@ import { Hero } from '../hero';
 })
 export class HeroSearchComponent implements OnInit, OnDestroy {
   heroes: Observable<Hero[]>;
+  keyup$ = new Subject<KeyboardEvent>();
 
   constructor(
     private heroSearchService: HeroSearchService,
     private router: Router,
     private store: Store<AppState>,
-    private heroActions: HeroActions ) { }
+    private heroActions: HeroActions) { }
 
   search(term: string): void {
     // Push a search term into the observable stream.
@@ -27,9 +28,13 @@ export class HeroSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.heroes = this.store.let(getSearchResults())
-      .debounceTime(300)        // wait for 300ms pause in events
-      .distinctUntilChanged();   // ignore if next search term is same as previous
+    this.keyup$
+      .debounceTime(300)
+      .map(event => (event.target as HTMLInputElement).value)
+      .distinctUntilChanged()
+      .subscribe(term => this.search(term));
+
+    this.heroes = this.store.let(getSearchResults());
   }
 
   ngOnDestroy(): void {
