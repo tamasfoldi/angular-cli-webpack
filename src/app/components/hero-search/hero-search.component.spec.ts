@@ -2,20 +2,18 @@
 
 import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { configureTests, createRoot, advance, RootComponent, BlankComponent } from '../../helpers/route.provider.helper';
-import { HeroSearchService } from '../hero-search.service';
-import { HeroService } from '../hero.service';
-import { HeroMockSearchService } from '../../helpers/hero.search.mock.service';
-import { HeroMockService } from '../../helpers/hero.mock.service';
+import { configureTests, createRoot, advance, RootComponent, BlankComponent } from '../../../helpers/route.provider.helper';
+import { HeroSearchService, HeroService } from '../../services';
+import { HeroMockSearchService } from '../../../helpers/hero.search.mock.service';
+import { HeroMockService } from '../../../helpers/hero.mock.service';
 import {
   inject,
   fakeAsync,
-  addProviders,
   tick
 } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { TestComponentBuilder, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AppComponent } from '../app.component';
 import { FormsModule } from '@angular/forms';
 import { HeroSearchComponent } from './hero-search.component';

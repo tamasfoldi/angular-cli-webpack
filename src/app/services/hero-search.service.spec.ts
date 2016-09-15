@@ -6,8 +6,7 @@ import {
   tick,
   TestBed
 } from '@angular/core/testing';
-import {MockBackend, MockConnection} from '@angular/http/testing';
-import {provide} from '@angular/core';
+import { MockBackend, MockConnection } from '@angular/http/testing';
 import {
   Http,
   ConnectionBackend,
@@ -26,12 +25,13 @@ describe('Service: Hero', () => {
         BaseRequestOptions,
         MockBackend,
         HeroSearchService,
-        provide(Http, {
+        {
+          provide: Http,
           useFactory: (backend: ConnectionBackend,
             defaultOptions: BaseRequestOptions) => {
             return new Http(backend, defaultOptions);
           }, deps: [MockBackend, BaseRequestOptions]
-        })
+        }
       ]
     });
   });
