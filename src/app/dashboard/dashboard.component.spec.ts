@@ -10,12 +10,11 @@ import { HeroMockService } from '../../helpers/hero.mock.service';
 import { HeroMockSearchService } from '../../helpers/hero.search.mock.service';
 import {
   inject,
-  fakeAsync,
-  addProviders
+  fakeAsync
 } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { TestComponentBuilder, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AppComponent } from '../app.component';
 import { HeroDetailComponent } from '../hero-detail/hero-detail.component';
 import { HeroSearchComponent } from '../hero-search/hero-search.component';

@@ -10,12 +10,11 @@ import { HeroMockService } from '../../helpers/hero.mock.service';
 import {
   inject,
   fakeAsync,
-  addProviders,
   tick
 } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { TestComponentBuilder, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AppComponent } from '../app.component';
 import { FormsModule } from '@angular/forms';
 import { HeroSearchComponent } from './hero-search.component';

@@ -6,9 +6,8 @@ import {
   tick,
   TestBed
 } from '@angular/core/testing';
-import {MockBackend, MockConnection} from '@angular/http/testing';
-import {provide} from '@angular/core';
-import {Observable} from 'rxjs/Rx';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { Observable } from 'rxjs/Rx';
 import {
   Http,
   ConnectionBackend,
@@ -29,12 +28,13 @@ describe('Hero Service', () => {
         BaseRequestOptions,
         MockBackend,
         HeroService,
-        provide(Http, {
+        {
+          provide: Http,
           useFactory: (backend: ConnectionBackend,
             defaultOptions: BaseRequestOptions) => {
             return new Http(backend, defaultOptions);
           }, deps: [MockBackend, BaseRequestOptions]
-        }),
+        }
       ]
     });
   });
@@ -78,7 +78,7 @@ describe('Hero Service', () => {
         }))
     );
 
-    it('should return with an error 2', // for 100% branch coverage 
+    it('should return with an error 2', // for 100% branch coverage
       inject([HeroService, MockBackend],
         fakeAsync((service: HeroService, mockBackend: MockBackend) => {
           let errorResp;

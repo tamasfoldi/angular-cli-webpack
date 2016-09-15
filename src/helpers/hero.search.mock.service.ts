@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { provide } from '@angular/core';
 import { HeroSearchService } from '../app/hero-search.service';
 
 import { Hero } from '../app/hero';
@@ -18,6 +17,6 @@ export class HeroMockSearchService {
   }
 
   getProviders(): Array<any> {
-    return [provide(HeroSearchService, {useValue: this})];
+    return [{provide: HeroSearchService, useValue: this}];
   }
 }

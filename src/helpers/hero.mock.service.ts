@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HeroService } from '../app/hero.service';
 import { Response, ResponseOptions } from '@angular/http';
-import { provide } from '@angular/core';
 
 import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Rx';
@@ -48,6 +47,6 @@ export class HeroMockService {
   }
 
   getProviders(): Array<any> {
-    return [provide(HeroService, { useValue: this })];
+    return [{ provide: HeroService, useValue: this }];
   }
 }
