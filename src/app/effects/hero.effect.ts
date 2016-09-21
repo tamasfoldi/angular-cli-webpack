@@ -35,6 +35,12 @@ export class HeroEffects {
     .switchMapTo(this.heroService.getHeroes())
     .map((Heros: Hero[]) => this.heroActions.loadHeroesSuccess(Heros));
 
+  @Effect() loadHero$ = this.updates$
+    .ofType(HeroActions.LOAD_HERO)
+    .map<number>(action => action.payload)
+    .switchMap(id => this.svc.getHero(id))
+    .map(hero => this.heroActions.loadHeroSuccess(hero));
+
 
   @Effect() search$ = this.updates$
     .ofType(HeroActions.SEARCH)

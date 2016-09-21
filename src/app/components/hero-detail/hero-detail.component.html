@@ -1,11 +1,1 @@
-<div *ngIf="hero">
-  <h2>{{name}} details!</h2>
-  <div>
-    <label>id: </label><span>{{hero.id}}</span></div>
-  <div>
-    <label>name: </label>
-    <input [(ngModel)]="name" placeholder="name" />
-  </div>
-  <button (click)="goBack()">Back</button>
-  <button (click)="save()">Save</button>
-</div>
+<app-hero-form [hero]="hero | async" (back)="goBack()" (save)="save($event)"></app-hero-form>

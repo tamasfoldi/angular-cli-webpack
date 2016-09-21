@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
@@ -13,51 +13,39 @@ import { Hero } from '../../interfaces';
   templateUrl: './heroes.component.html',
   styleUrls: ['./heroes.component.css']
 })
-export class HeroesComponent implements OnInit {
-  heroes$: Observable<Hero[]>;
+export class HeroesComponent{
+  heroes$: Observable<{}>;
   selectedHero: Hero;
   addingHero = false;
   error: any;
 
   constructor(
-    private router: Router,
     private store: Store<AppState>,
-    private heroActions: HeroActions) {
+    private heroActions: HeroActions,
+    private router: Router
+  ) {
+    this.heroes$ = store.select('heroes').map(heroes => (<any>heroes).entities);
   }
 
-  getHeroes(): void {
-    this.heroes$ = this.store.let(getAllHeroes());
-
-  }
-
-  addHero(): void {
+  addHero() {
     this.addingHero = true;
     this.selectedHero = null;
   }
 
-  close(savedHero: Hero): void {
+  close() {
     this.addingHero = false;
-    if (savedHero) { this.getHeroes(); }
   }
 
-  deleteHero(hero: Hero, event: any): void {
-    event.stopPropagation();
+  delete(hero) {
     this.store.dispatch(this.heroActions.removeHero(hero));
-    if (this.selectedHero && this.selectedHero.id === hero.id) {
-      this.selectedHero = null;
-    }
   }
 
-  ngOnInit(): void {
-    this.getHeroes();
-  }
-
-  onSelect(hero: Hero): void {
+  select(hero) {
     this.selectedHero = hero;
     this.addingHero = false;
   }
 
-  gotoDetail(): void {
-    this.router.navigate(['/detail', this.selectedHero.id]);
+  gotoDetail() {
+    this.router.navigate(['/detail/' + this.selectedHero.id]);
   }
 }

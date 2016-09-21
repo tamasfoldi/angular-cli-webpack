@@ -94,7 +94,15 @@ export class HeroActions {
   }
 
   static LOAD_HERO = '[Hero] Load Hero';
-  loadHero(hero: Hero): Action {
+  loadHero(heroId: number): Action {
+    return {
+      type: HeroActions.LOAD_HERO,
+      payload: heroId
+    };
+  }
+
+  static LOAD_HERO_SUCCESS = '[Hero] Load Hero Success';
+  loadHeroSuccess(hero: Hero): Action {
     return {
       type: HeroActions.LOAD_HERO,
       payload: hero
@@ -122,6 +130,13 @@ export class HeroActions {
     return {
       type: HeroActions.EDIT_HERO_FAIL,
       payload: hero
+    };
+  }
+
+  static RESET_BLANK_HERO = '[Hero] Reset Blank Hero';
+  resetBlankHero(): Action {
+    return {
+      type: HeroActions.RESET_BLANK_HERO
     };
   }
 }

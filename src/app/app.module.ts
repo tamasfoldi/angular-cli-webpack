@@ -19,6 +19,8 @@ import { useLogMonitor, StoreLogMonitorModule } from '@ngrx/store-log-monitor';
 import { HeroEffects } from '../app/effects/hero.effect';
 import reducer from './reducers';
 import actions from './actions';
+import { HeroListComponent } from './components/hero-list/hero-list.component';
+import { HeroFormComponent } from './components/hero-form/hero-form.component';
 
 @NgModule({
   imports: [
@@ -39,7 +41,9 @@ import actions from './actions';
   declarations: [
     AppComponent,
     HeroSearchComponent,
-    routedComponents
+    routedComponents,
+    HeroListComponent,
+    HeroFormComponent
   ],
   providers: [
     HeroService,
