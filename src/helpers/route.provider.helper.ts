@@ -8,19 +8,15 @@ import { CommonModule } from '@angular/common';
 import { provideRoutes } from '@angular/router';
 import { ComponentFixture } from '@angular/core/testing';
 import {
-  ROUTER_DIRECTIVES,
   ActivatedRoute,
   Router,
-  RouterConfig
+  Routes
 } from '@angular/router';
-import { DashboardComponent } from '../app/dashboard/dashboard.component';
-import { HeroDetailComponent } from '../app/hero-detail/hero-detail.component';
-import { HeroesComponent } from '../app/heroes/heroes.component';
-import { HeroSearchComponent } from '../app/hero-search/hero-search.component';
+import { DashboardComponent, HeroDetailComponent, HeroesComponent, HeroSearchComponent } from '../app/components';
 import { HeroMockService } from './hero.mock.service';
 import { HeroMockSearchService } from './hero.search.mock.service';
 
-export const routerConfig: RouterConfig = [
+export const routerConfig: Routes = [
   { path: '', component: BlankComponent, pathMatch: 'full', redirectTo: '/dashboard' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'detail/:id', component: HeroDetailComponent },
@@ -66,8 +62,7 @@ export function advance(fixture: ComponentFixture<any>): void {
 
 @Component({
   selector: 'app-blank-cmp',
-  template: ``,
-  directives: [ROUTER_DIRECTIVES]
+  template: ``
 })
 export class BlankComponent {
 }
@@ -75,7 +70,6 @@ export class BlankComponent {
 @Component({
   selector: 'app-blank-cmp',
   template: `<router-outlet></router-outlet>`,
-  directives: [ROUTER_DIRECTIVES],
   entryComponents: [BlankComponent, DashboardComponent, HeroDetailComponent, HeroesComponent, HeroSearchComponent]
 })
 export class RootComponent {
