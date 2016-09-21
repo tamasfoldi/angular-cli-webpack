@@ -25,7 +25,11 @@ export class HeroDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
       if (params['id'] !== undefined) {
-        this.store.dispatch(this.heroActions.loadHero(params['id']));
+        this.hero = this.store.select('heroes')
+          .map(heroes => (<any>heroes).entities
+            .filter(hero => hero.id === parseInt(params['id'], 10))
+          )
+          .map(heroes => heroes[0]);
         this.navigated = true;
       } else {
         // this.store.dispatch(this.heroActions.resetBlankHero());
