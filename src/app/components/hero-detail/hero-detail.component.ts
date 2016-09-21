@@ -39,7 +39,7 @@ export class HeroDetailComponent implements OnInit {
   }
 
   save(hero: Hero): void {
-    if (hero.id === 0) {
+    if (!hero.id) {
       this.store.dispatch(this.heroActions.addHero(hero));
     } else {
       this.store.dispatch(this.heroActions.editHero(hero));
