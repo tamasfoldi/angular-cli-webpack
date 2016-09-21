@@ -30,7 +30,7 @@ import actions from './actions';
     StoreDevtoolsModule.instrumentStore({
       monitor: useLogMonitor({
         position: 'right',
-        visible: true
+        visible: false
       })
     }),
     StoreLogMonitorModule,
