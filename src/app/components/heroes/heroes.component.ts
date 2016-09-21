@@ -43,7 +43,7 @@ export class HeroesComponent implements OnInit {
   deleteHero(hero: Hero, event: any): void {
     event.stopPropagation();
     this.store.dispatch(this.heroActions.removeHero(hero));
-    if (this.selectedHero.id === hero.id) {
+    if (this.selectedHero && this.selectedHero.id === hero.id) {
       this.selectedHero = null;
     }
   }
