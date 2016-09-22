@@ -7,16 +7,19 @@ import { storeLogger } from 'ngrx-store-logger';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { combineReducers } from '@ngrx/store';
 import searchReducer, * as fromSearch from './search.reducer';
-import heroesReducer, * as fromHeroes from './hero.reducer';
+import heroesReducer, * as fromHeroes from './heroes.reducer';
+import heroReducer, * as fromHero from './hero.reducer';
 
 export interface AppState {
   search: fromSearch.SearchState;
   heroes: fromHeroes.HeroesState;
+  hero: fromHero.HeroState;
 }
 
 export default compose(storeFreeze, storeLogger(), combineReducers)({
   search: searchReducer,
-  heroes: heroesReducer
+  heroes: heroesReducer,
+  hero: heroReducer
 });
 
 export function getHeroesState() {
@@ -28,8 +31,13 @@ export function getAllHeroes() {
   return compose(fromHeroes.getAllHeroes(), getHeroesState());
 }
 
-export function getHero(id: number) {
-  return compose(fromHeroes.getHero(id), getHeroesState());
+export function getHeroState() {
+  return (state$: Observable<AppState>) => state$
+    .select(s => s.hero);
+}
+
+export function getHero() {
+  return compose(fromHero.getHero(), getHeroState());
 }
 
 export function getSearchState() {

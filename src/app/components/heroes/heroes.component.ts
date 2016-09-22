@@ -13,7 +13,7 @@ import { Hero } from '../../interfaces';
   templateUrl: './heroes.component.html',
   styleUrls: ['./heroes.component.css']
 })
-export class HeroesComponent{
+export class HeroesComponent {
   heroes$: Observable<{}>;
   selectedHero: Hero;
   addingHero = false;
@@ -24,7 +24,7 @@ export class HeroesComponent{
     private heroActions: HeroActions,
     private router: Router
   ) {
-    this.heroes$ = store.select('heroes').map(heroes => (<any>heroes).entities);
+    this.heroes$ = store.select('heroes');
   }
 
   addHero() {

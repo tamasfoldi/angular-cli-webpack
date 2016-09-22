@@ -104,8 +104,15 @@ export class HeroActions {
   static LOAD_HERO_SUCCESS = '[Hero] Load Hero Success';
   loadHeroSuccess(hero: Hero): Action {
     return {
-      type: HeroActions.LOAD_HERO,
+      type: HeroActions.LOAD_HERO_SUCCESS,
       payload: hero
+    };
+  }
+
+  static LOAD_HERO_FAIL = '[Hero] Load Hero Fail';
+  loadHeroFail(): Action {
+    return {
+      type: HeroActions.LOAD_HERO_FAIL
     };
   }
 

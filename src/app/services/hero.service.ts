@@ -12,17 +12,15 @@ export class HeroService {
 
   constructor(private http: Http) { }
 
-  getHeroes(): Promise<Hero[]> {
+  getHeroes(): Observable<Hero[]> {
     return this.http
       .get(this.heroesUrl)
-      .toPromise()
-      .then(response => response.json().data as Hero[])
-      .catch(this.handleError);
+      .map(rsp => rsp.json().data as Hero[]);
   }
 
-  getHero(id: number): Promise<Hero> {
+  getHero(id: number): Observable<Hero> {
     return this.getHeroes()
-      .then(heroes => heroes.find(hero => hero.id === id));
+      .map(heroes => heroes.find(hero => hero.id === id));
   }
 
   save(hero: Hero): Observable<Hero> {

@@ -20,19 +20,16 @@ export class HeroDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private store: Store<AppState>,
     private heroActions: HeroActions) {
+    this.hero = store.select('hero');
   }
 
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
       if (params['id'] !== undefined) {
-        this.hero = this.store.select('heroes')
-          .map(heroes => (<any>heroes).entities
-            .filter(hero => hero.id === parseInt(params['id'], 10))
-          )
-          .map(heroes => heroes[0]);
+        this.store.dispatch(this.heroActions.loadHero(parseInt(params['id'], 10)));
         this.navigated = true;
       } else {
-        // this.store.dispatch(this.heroActions.resetBlankHero());
+        this.store.dispatch(this.heroActions.resetBlankHero());
         this.navigated = false;
       }
     });
@@ -49,6 +46,7 @@ export class HeroDetailComponent implements OnInit {
 
   goBack(savedHero: Hero = null): void {
     this.close.emit(savedHero);
+    this.store.dispatch(this.heroActions.resetBlankHero());
     if (this.navigated) { window.history.back(); }
   }
 }
