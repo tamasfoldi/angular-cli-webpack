@@ -9,17 +9,20 @@ import { combineReducers } from '@ngrx/store';
 import searchReducer, * as fromSearch from './search.reducer';
 import heroesReducer, * as fromHeroes from './heroes.reducer';
 import heroReducer, * as fromHero from './hero.reducer';
+import * as fromRouter from '@ngrx/router-store';
 
 export interface AppState {
   search: fromSearch.SearchState;
   heroes: fromHeroes.HeroesState;
   hero: fromHero.HeroState;
+  router: fromRouter.RouterState;
 }
 
 export default compose(storeFreeze, storeLogger(), combineReducers)({
   search: searchReducer,
   heroes: heroesReducer,
-  hero: heroReducer
+  hero: heroReducer,
+  router: fromRouter.routerReducer
 });
 
 export function getHeroesState() {
